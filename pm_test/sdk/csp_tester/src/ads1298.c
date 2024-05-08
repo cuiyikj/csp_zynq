@@ -165,17 +165,17 @@ void ADS_Init()
 	HAL_Delay(100);
 	ADS_WREG(CH4SET,0x10);
 	HAL_Delay(100);
-	ADS_WREG(CH5SET,0x91);
+	ADS_WREG(CH5SET,0x10);
 	// Channel input :101 = Test signal
 	HAL_Delay(100);
-	ADS_WREG(CH6SET,0x91);
+	ADS_WREG(CH6SET,0x10);
 	// Channel input :101 = Test signal
 	HAL_Delay(100);
-	ADS_WREG(CH7SET,0x91);
+	ADS_WREG(CH7SET,0x10);
 	// PGA gain : 110 = 12 , Channel input :101 = Test signal
 
 	HAL_Delay(100);
-	ADS_WREG(CH8SET,0x91);
+	ADS_WREG(CH8SET,0x10);
 	// PGA gain : 110 = 12 , Channel input :101 = Test signal
 	HAL_Delay(100);
 
@@ -266,7 +266,7 @@ terminals.
 */
 	HAL_Delay(10);
 
-	ADS_WREG(WCT1,0xF8);
+	ADS_WREG(WCT1,0xFA);
 	//Wilson Central Terminal and Augmented Lead Control Register (address = 18h) (reset = 00h)
 	// 0 = Enable (WCTA + WCTB)/2 to the negative input of channel 6 : 0 = Disabled
 	// 0 = Enable (WCTA + WCTC)/2 to the negative input of channel 5 : 0 = Disabled
@@ -280,7 +280,7 @@ terminals.
 
 	HAL_Delay(10);
 
-	ADS_WREG(WCT2,0xE3);
+	ADS_WREG(WCT2,0xDC);
 	// WCT2: Wilson Central Terminal Control Register (address = 19h) (reset = 00h)
 	// 1 = Power-down WCTC : 1 = Powered on
 	// 1 = Power-down WCTB : 1 = Powered on
