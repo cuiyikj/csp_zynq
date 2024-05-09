@@ -60,11 +60,30 @@
 
 uint32_t loop_index = 0;
 int32_t adc_data[16] = {0};
+int32_t ecg_adc_data[12] = {0};
+
+int32_t lead_I = 0;
+int32_t lead_II = 0;
+int32_t lead_III = 0;
+int32_t aVL = 0;
+int32_t aVR = 0;
+int32_t aVF= 0;
+
+// Lead I: RA (-) to LA (+) (Right Left, or lateral)
+// Lead II: RA (-) to LL (+) (Superior Inferior)
+// Lead III: LA (-) to LL (+) (Superior Inferior)
+
+// Lead aVR: RA (+) to [LA & LL] (-) (Rightward)
+// Lead aVL: LA (+) to [RA & LL] (-) (Leftward)
+// Lead aVF: LL (+) to [RA & LA] (-) (Inferior)
+
+// Leads V1, V2, V3: (Posterior Anterior)
+// Leads V4, V5, V6:(Right Left, or lateral)
+
 
 int main()
 {
-	int i;
-
+    int i;
     init_platform();
     print("\r\n\r\n");
     //start_cpu1();
@@ -74,20 +93,36 @@ int main()
     main_led_gpio_init();
     main_gpio_init();
     spi_ps_init();
-	printf("spi ready %d\n\r", read_gpio(0));
-
-
-
+    printf("spi ready %d\n\r", read_gpio(0));
     ADS_reset();
     ADS_Init();
-
-
     while(1)
     {
-
     	ADS_START();
     	usleep(2);
     	ADS_RDATA();
+	lead_I = adc_data[1];
+	lead_II = adc_data[2];
+	lead_III = ecg_adc_data[1] - ecg_adc_data[0];
+	// aVL = (I + III)/2
+	// aVR = (- I -II)/2
+	// aVF= ( II + III)/2
+	
+	ecg_adc_data[0] = lead_I;
+	ecg_adc_data[1] = lead_II;
+	ecg_adc_data[2] = lead_III;
+	ecg_adc_data[3] = (I + III)/2;
+	ecg_adc_data[4] = (- I -II)/2;
+	ecg_adc_data[5] = ( II + III)/2;
+	ecg_adc_data[6] = ecg_adc_data[7] ;
+	ecg_adc_data[7] = ecg_adc_data[3] ;
+	ecg_adc_data[8] = ecg_adc_data[4] ;
+	ecg_adc_data[9] = ecg_adc_data[5] ;
+	ecg_adc_data[10] = ecg_adc_data[6] ;
+	ecg_adc_data[11] = ecg_adc_data[0] ;
+   
+	    
+	    
     	ps_uart_sent_adc((uint8_t*)adc_data, 32);
 
     	usleep(610);
