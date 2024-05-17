@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vivado v2022.1 (64-bit)
+# SW Build 3526262 on Mon Apr 18 15:48:16 MDT 2022
+# IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+# Start of session at: Sat May 11 22:24:18 2024
+# Process ID: 1640
+# Current directory: C:/git/csp_zynq/pm_test/pm_test.runs/impl_1
+# Command line: vivado.exe -log pm_zynq_wrapper.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source pm_zynq_wrapper.tcl -notrace
+# Log file: C:/git/csp_zynq/pm_test/pm_test.runs/impl_1/pm_zynq_wrapper.vdi
+# Journal file: C:/git/csp_zynq/pm_test/pm_test.runs/impl_1\vivado.jou
+# Running On: DESKTOP-RIP2140, OS: Windows, CPU Frequency: 2419 MHz, CPU Physical cores: 24, Host memory: 33954 MB
+#-----------------------------------------------------------
+source pm_zynq_wrapper.tcl -notrace
