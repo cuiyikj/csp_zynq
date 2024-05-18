@@ -16,43 +16,43 @@
 #include "spi_ps.h"
 
 
-#define _WAKEUP 	0x02 // Wake-up from standby mode
-#define _STANDBY 	0x04 // Enter Standby mode
-#define _RESET 		0x06 // Reset the device registers to default
-#define _START 		0x08 // Start and restart (synchronize) conversions
-#define _STOP 		0x0A // Stop conversion
-#define _RDATAC 	0x10 // Enable Read Data Continuous mode (default mode at power-up)
-#define _SDATAC 	0x11 // Stop Read Data Continuous mode
-#define _RDATA 		0x12 // Read data by command; supports multiple read back
+#define _WAKEUP 					0x02 // Wake-up from standby mode
+#define _STANDBY 					0x04 // Enter Standby mode
+#define _RESET 						0x06 // Reset the device registers to default
+#define _START 						0x08 // Start and restart (synchronize) conversions
+#define _STOP 						0x0A // Stop conversion
+#define _RDATAC 					0x10 // Enable Read Data Continuous mode (default mode at power-up)
+#define _SDATAC 					0x11 // Stop Read Data Continuous mode
+#define _RDATA 						0x12 // Read data by command; supports multiple read back
 
 //Register Addresses
-#define ID 0x00
-#define CONFIG1 0x01
-#define CONFIG2 0x02
-#define CONFIG3 0x03
-#define LOFF 0x04
-#define CH1SET 0x05
-#define CH2SET 0x06
-#define CH3SET 0x07
-#define CH4SET 0x08
-#define CH5SET 0x09
-#define CH6SET 0x0A
-#define CH7SET 0x0B
-#define CH8SET 0x0C
-#define BIAS_SENSP 0x0D
-#define BIAS_SENSN 0x0E
-#define LOFF_SENSP 0x0F
-#define LOFF_SENSN 0x10
-#define LOFF_FLIP 0x11
-#define LOFF_STATP 0x12
-#define LOFF_STATN 0x13
-#define GPIO 0x14
-#define MISC1 0x15
-#define MISC2 0x16
-#define CONFIG4 0x17
+#define ID 							0x00
+#define CONFIG1 					0x01
+#define CONFIG2 					0x02
+#define CONFIG3 					0x03
+#define LOFF 						0x04
+#define CH1SET 						0x05
+#define CH2SET 						0x06
+#define CH3SET 						0x07
+#define CH4SET 						0x08
+#define CH5SET 						0x09
+#define CH6SET 						0x0A
+#define CH7SET 						0x0B
+#define CH8SET 						0x0C
+#define BIAS_SENSP 					0x0D
+#define BIAS_SENSN 					0x0E
+#define LOFF_SENSP 					0x0F
+#define LOFF_SENSN 					0x10
+#define LOFF_FLIP 					0x11
+#define LOFF_STATP 					0x12
+#define LOFF_STATN 					0x13
+#define GPIO 						0x14
+#define MISC1 						0x15
+#define MISC2 						0x16
+#define CONFIG4 					0x17
 
-#define WCT1 		0x18
-#define WCT2 		0x19
+#define WCT1 						0x18
+#define WCT2 						0x19
 
 #define CONFIG1_HR 					0x80
 #define CONFIG1_LP 					0x00
@@ -80,23 +80,17 @@ uint8_t ADS_RREG(uint8_t _address);
 
 void ADS_RREGS(uint8_t _address, uint8_t _numRegistersMinusOne);
 void ADS_WREG(uint8_t _address, uint8_t _value);
-void ADS_WREGS(uint8_t _address, uint8_t _numRegistersMinusOne);
+void ADS_WREGS(uint8_t _address, uint8_t _numRegistersMinusOne, uint8_t *reg_ini);
 void ADS_updateChannelData(void);
 void ADS_RDATA(void);
 void ADS_printRegisterName(uint8_t _address);
 
 void ADS_sendUSBData(void);
 
-//extern uint8_t transferSPI(uint8_t send);
-//
-//extern void USB_Print(unsigned char* string);
-//extern void USB_SendBits(uint8_t b);
-//extern void USB_SendNumber(int32_t num);
-//extern void USB_Send4Byte(uint8_t* fb);
 void ADS_reset();
 void ADS_test();
 
-
+#if 0
 
 /******************************************************************************/
 /* ADS1298 OPCODE COMMANDS													  */
@@ -168,15 +162,15 @@ void ADS_test();
 /* ADS1298 Configuration Register 1											  */
 /******************************************************************************/
 #define ADS1298_CONFIG1_HR			(0b1u << 7)		// High-resolution or low-power mode
-													//	0 = LP mode
-													//	1 = HR mode
+//	0 = LP mode
+//	1 = HR mode
 #define ADS1298_CONFIG1_DAISYDIS	(0b1u << 6)		// Daisy-chain or multiple readback mode
-													//	0 = Daisy-chain mode
-													//	1 = Multiple readback mode
+//	0 = Daisy-chain mode
+//	1 = Multiple readback mode
 #define ADS1298_CONFIG1_CLK			(0b1u << 5)  	// CLK connection
-													//	0 = Oscillator clock output disabled
-													//	1 = Oscillator clock output enabled
-													// Output data rate
+//	0 = Oscillator clock output disabled
+//	1 = Oscillator clock output enabled
+// Output data rate
 #define ADS1298_CONFIG1_DR_32K		(0b000u << 0)	//	000 = HR: 32kSPS, LP: 16kSPS
 #define ADS1298_CONFIG1_DR_16K		(0b001u << 0)	//	001 = HR: 16kSPS, LP: 8kSPS
 #define ADS1298_CONFIG1_DR_8K		(0b010u << 0)	//	010 = HR: 8kSPS,  LP: 4kSPS
@@ -189,15 +183,15 @@ void ADS_test();
 /* ADS1298 Configuration Register 2											  */
 /******************************************************************************/
 #define ADS1298_CONFIG2_WCTCHOPCONST		(0b1u << 5)	// WCT chopping scheme
-														//	0 = Chopping frequency varies
-														//	1 = Chopping frequency constant at fMOD/16
+//	0 = Chopping frequency varies
+//	1 = Chopping frequency constant at fMOD/16
 #define ADS1298_CONFIG2_INTTEST				(0b1u << 4)	// Test signal source
-														//	0 = Test signals are driven externally
-														//	1 = Test signals are driven internally
+//	0 = Test signals are driven externally
+//	1 = Test signals are driven internally
 #define ADS1298_CONFIG2_TESTAMP				(0b1u << 2)	// Test signal amplitude
-														//	0 = 1 x -(VREFP-VREFN) / 2400V
-														//	1 = 2 x -(VREFP-VREFN) / 2400V
-														// Test signal frequency
+//	0 = 1 x -(VREFP-VREFN) / 2400V
+//	1 = 2 x -(VREFP-VREFN) / 2400V
+// Test signal frequency
 #define ADS1298_CONFIG2_TESTFREQ_AC21		(0b00u << 0)	//	00 = Pulsed at fCLK/2^21
 #define ADS1298_CONFIG2_TESTFREQ_AC20		(0b01u << 0)	//	01 = Pulsed at fCLK/2^20
 #define ADS1298_CONFIG2_TESTFREQ_NONE		(0b11u << 0)	//	10 = Not used
@@ -208,31 +202,31 @@ void ADS_test();
 /* ADS1298 Configuration Register 3											  */
 /******************************************************************************/
 #define ADS1298_CONFIG3_INTREFEN		(0b01u << 7)	// Power-down reference buffer
-													//	0 = Power-down internal reference buffer
-													//	1 = Enable internal reference buffer
+//	0 = Power-down internal reference buffer
+//	1 = Enable internal reference buffer
 #define ADS1298_CONFIG3_VREF4V			(0b01u << 5)	// Reference voltage
-													//	0 = VREFP is 2.4V
-													//	1 = VREFP is 4V (only to be used with 5V supply)
+//	0 = VREFP is 2.4V
+//	1 = VREFP is 4V (only to be used with 5V supply)
 #define ADS1298_CONFIG3_RLDMEAS			(0b01u << 4) // RLD measurement
-													//	0 = Open
-													//	1 = RLD_IN signal is routed to channel that has the MUX_Setting 010
+//	0 = Open
+//	1 = RLD_IN signal is routed to channel that has the MUX_Setting 010
 #define ADS1298_CONFIG3_RLDREFINT		(0b01u << 3)	// RLDREF signal
-													//	0 = RLDREF signal fed externally
-													//	1 = RLDREF signal (AVDD-AVSS)/2 generated internally
+//	0 = RLDREF signal fed externally
+//	1 = RLDREF signal (AVDD-AVSS)/2 generated internally
 #define ADS1298_CONFIG3_RLDBUFFEN		(0b01u << 2)	// RLD buffer power
-													//	0 = RLD buffer is powered down
-													//	1 = RLD buffer is enable
+//	0 = RLD buffer is powered down
+//	1 = RLD buffer is enable
 #define ADS1298_CONFIG3_RLDLOFFSENS		(0b01u << 1)	// RLD sense function
-													//	0 = RLD sense disabled
-													//	1 = RLD sens is enabled
+//	0 = RLD sense disabled
+//	1 = RLD sens is enabled
 #define ADS1298_CONFIG3_RLDSTAT			(0b11u << 0)	// RLD lead-off status mask
-													//	0 = RLD is connected
-													//	1 = RLD is not connected
+//	0 = RLD is connected
+//	1 = RLD is not connected
 
 /******************************************************************************/
 /* ADS1298 Lead-Off Control Register										  */
 /******************************************************************************/
-														// Lead-off comparator threshold
+// Lead-off comparator threshold
 #define ADS1298_LOFF_COMPTH_95			(0b000u << 5)	//	000 = Pos: 95%,   Neg: 5%
 #define ADS1298_LOFF_COMPTH_92_5		(0b001u << 5)	//	001 = Pos: 92.5%, Neg: 7.5%
 #define ADS1298_LOFF_COMPTH_90			(0b010u << 5)	//	010 = Pos: 90%,   Neg: 10%
@@ -242,14 +236,14 @@ void ADS_test();
 #define ADS1298_LOFF_COMPTH_75			(0b110u << 5)	//	110 = Pos: 75%,   Neg: 25%
 #define ADS1298_LOFF_COMPTH_70			(0b111u << 5)	//	111 = Pos: 70%,   Neg: 30%
 #define ADS1298_LOFF_VLEADOFF			(0b1u << 4)		// Lead-off detection mode
-														//	0 = Current source mode lead-off
-														//	1 = Pullup or pulldown resistor mode lead-off
-														// Lead-off current magnitude
+//	0 = Current source mode lead-off
+//	1 = Pullup or pulldown resistor mode lead-off
+// Lead-off current magnitude
 #define ADS1298_LOFF_ILEADOFF_6			(0b00u << 2)		//	00 = 6nA
 #define ADS1298_LOFF_ILEADOFF_12		(0b01u << 2)		//	01 = 12nA
 #define ADS1298_LOFF_ILEADOFF_18		(0b10u << 2)		//	10 = 18nA
 #define ADS1298_LOFF_ILEADOFF_24		(0b11u << 2)		//	11 = 24nA
-														// Lead-off frequency
+// Lead-off frequency
 #define ADS1298_LOFF_FLEADOFF_AC		(0b01u << 0)		//	01 = AC lead-off detection at fDR/4
 #define ADS1298_LOFF_FLEADOFF_DC		(0b11u << 0)		//	11 = DC lead-off detection
 
@@ -257,9 +251,9 @@ void ADS_test();
 /* ADS1298 Individual Channel Settings Registers							  */
 /******************************************************************************/
 #define ADS1298_CHSET_PD				(0b01u << 7)	// Power-down
-                                                        //	0 = Normal operation
-                                                        //	1 = Channel power-down
-                                                        // PGA gain
+//	0 = Normal operation
+//	1 = Channel power-down
+// PGA gain
 #define ADS1298_CHSET_GAIN_6			(0b000u << 4)	//	000 = 6
 #define ADS1298_CHSET_GAIN_1			(0b001u << 4)	//	001 = 1
 #define ADS1298_CHSET_GAIN_2			(0b010u << 4)	//	010 = 2
@@ -267,7 +261,7 @@ void ADS_test();
 #define ADS1298_CHSET_GAIN_4			(0b100u << 4)	//	100 = 4
 #define ADS1298_CHSET_GAIN_8			(0b101u << 4)	//	101 = 8
 #define ADS1298_CHSET_GAIN_12			(0b110u << 4)	//	110 = 12
-                                                    	// Channel input
+// Channel input
 #define ADS1298_CHSET_MUX_ELEC          (0b000u << 0)	//	000 = Normal electrode input
 #define ADS1298_CHSET_MUX_SHORT     	(0b001u << 0)	//	001 = Input shorted (for offset or noise measurements)
 #define ADS1298_CHSET_MUX_RLDMEAS		(0b010u << 0)	//	010 = RLD measurements
@@ -330,36 +324,36 @@ void ADS_test();
 /******************************************************************************/
 #define ADS1298_GPIO_DATA		(0b1111u << 4)	// GPIO data mask
 #define ADS1298_GOIO_CTRLIN		(0b0001u << 4)	// GPIO control
-												//	0 = Output
-												//	1 = Input
+//	0 = Output
+//	1 = Input
 
 /******************************************************************************/
 /* ADS1298 Pace Detect Register												  */
 /******************************************************************************/
-												// Pace even channels
+// Pace even channels
 #define ADS1298_PACE_EVEN_2			(0b00u << 3)	//	00 = Channel 2
 #define ADS1298_PACE_EVEN_4			(0b01u << 3)	//	01 = Channel 4
 #define ADS1298_PACE_EVEN_6			(0b10u << 3)	//	10 = Channel 6
 #define ADS1298_PACE_EVEN_8			(0b11u << 3)	//	11 = Channel 8
-												// Pace odd channels
+// Pace odd channels
 #define ADS1298_PACE_ODD_1			(0b00u << 1)	//	00 = Channel 1
 #define ADS1298_PACE_ODD_3			(0b01u << 1)	//	01 = Channel 3
 #define ADS1298_PACE_ODD_5			(0b10u << 1)	//	10 = Channel 5
 #define ADS1298_PACE_ODD_7			(0b11u << 1)	//	11 = Channel 7
 #define ADS1298_PACE_PACEBUFFEN		(0b1u << 0)	// Pace detect buffer
-												//	0 = Pace detect buffer turned off
-												//	1 = Pace detect buffer turned on
+//	0 = Pace detect buffer turned off
+//	1 = Pace detect buffer turned on
 
 /******************************************************************************/
 /* ADS1298 Respiration Control Register										  */
 /******************************************************************************/
 #define ADS1298_RESP_DEMODEN			(0b1u << 7)		// Enables respiration demodulation circuitry
-														//	0 = Off
-														//	1 = On
+//	0 = Off
+//	1 = On
 #define ADS1298_RESP_MODEN				(0b1u << 6)		// Enables respiration modulation circuitry
-														//	0 = Off
-														//	1 = On
-														// Respiration phase
+//	0 = Off
+//	1 = On
+// Respiration phase
 #define ADS1298_RESP_PH_22_5			(0b000u << 2)	//	000 = 22.5deg
 #define ADS1298_RESP_PH_45				(0b001u << 2)	//	001 = 45deg
 #define ADS1298_RESP_PH_67_5			(0b010u << 2)	//	010 = 67.5deg
@@ -367,7 +361,7 @@ void ADS_test();
 #define ADS1298_RESP_PH_112_5			(0b100u << 2)	//	100 = 112.5deg
 #define ADS1298_RESP_PH_135				(0b101u << 2)	//	101 = 135deg
 #define ADS1298_RESP_PH_157_5			(0b110u << 2)	//	110 = 157.5deg
-														// Respiration control
+// Respiration control
 #define ADS1298_RESP_CTRL_NONE			(0b00u << 0)		//	00 = No respiration
 #define ADS1298_RESP_CTRL_EXT			(0b01u << 0)		//	01 = External respiration
 #define ADS1298_RESP_CTRL_INTINT		(0b10u << 0)		//	10 = Internal respiration with internal signals
@@ -376,7 +370,7 @@ void ADS_test();
 /******************************************************************************/
 /* ADS1298 Configuration Register 4											  */
 /******************************************************************************/
-															// Respiration modulation frequency
+// Respiration modulation frequency
 #define ADS1298_CONFIG4_RESPFREQ_64K		(0b000u << 5)	//	000 = 64kHz modulation clock
 #define ADS1298_CONFIG4_RESPFREQ_32K		(0b001u << 5)	//	001 = 32kHz modulation clock
 #define ADS1298_CONFIG4_RESPFREQ_16K		(0b010u << 5)	//	010 = 16kHz square wave
@@ -386,28 +380,28 @@ void ADS_test();
 #define ADS1298_CONFIG4_RESPFREQ_1K			(0b110u << 5)	//	110 = 1kHz square wave
 #define ADS1298_CONFIG4_RESPFREQ_500		(0b111u << 5)	//	111 = 500Hz square wave
 #define ADS1298_CONFIG4_SINGLSHOT			(0b1u << 3)		// Single-shot conversion
-															//	0 = continuous conversion mode
-															//	1 = Single-shot mode
+//	0 = continuous conversion mode
+//	1 = Single-shot mode
 #define ADS1298_CONFIG4_WCTTORLD			(0b1u << 2)		// Connect the WCT to RLD
-															//	0 = WCT to RLD connection off
-															//	1 = WCT to RLD connection on
+//	0 = WCT to RLD connection off
+//	1 = WCT to RLD connection on
 #define ADS1298_CONFIG4_LOFFCOMPEN			(0b1u << 1)		// Lead-off comparator power-down
-															//	0 = Lead-off comparators disabled
-															//	1 = Lead-off comparators enabled
+//	0 = Lead-off comparators disabled
+//	1 = Lead-off comparators enabled
 
 /******************************************************************************/
 /* ADS1298 Wilson Central Terminal and Augmented Lead Control Register		  */
 /******************************************************************************/
 #define ADS1298_WCT1_AVFCH6				(0b1u << 7)		// Enable (WCTA+WCTB)/2 to negative input of channel 6
-														//	0 = Disabled
-														//	1 = Enabled
+//	0 = Disabled
+//	1 = Enabled
 #define ADS1298_WCT1_AVLCH5				(0b1u << 6)		// Enable (WCTA+WCTC)/2 to negative input of channel 6
 #define ADS1298_WCT1_AVRCH7				(0b1u << 5)		// Enable (WCTB+WCTC)/2 to negative input of channel 6
 #define ADS1298_WCT1_AVRCH4				(0b1u << 4)		// Enable (WCTB+WCTC)/2 to negative input of channel 6
 #define ADS1298_WCT1_WCTAEN				(0b1u << 3)		// Power-down WCTA
-														//	0 = Powered down
-														//	1 = Powered on
-														// WCT Amplifier A selection
+//	0 = Powered down
+//	1 = Powered on
+// WCT Amplifier A selection
 #define ADS1298_WCT1_WCTA_CH1POS		(0b000u << 0)	//	000 = Channel 1 positive input connected to WCTA amplifier
 #define ADS1298_WCT1_WCTA_CH1NEG		(0b001u << 0)	//	001 = Channel 1 negative input connected to WCTA amplifier
 #define ADS1298_WCT1_WCTA_CH2POS		(0b010u << 0)	//	010 = Channel 2 positive input connected to WCTA amplifier
@@ -421,10 +415,10 @@ void ADS_test();
 /* ADS1298 Wilson Central Terminal Control Register							  */
 /******************************************************************************/
 #define ADS1298_WCT2_WCTCEN             (0b1u << 7)	// Powered-down WCTC
-                                                    	//	0 = Powered down
-                                                        //	1 = Powered on
+//	0 = Powered down
+//	1 = Powered on
 #define ADS1298_WCT2_WCTBEN             (0b1u << 6)	// Powered-down WCTB
-														// WCT Amplifier B selection
+// WCT Amplifier B selection
 #define ADS1298_WCT2_WCTB_CH1POS		(0b000u << 3)	//	000 = Channel 1 positive input connected to WCTB amplifier
 #define ADS1298_WCT2_WCTB_CH1NEG		(0b001u << 3)	//	001 = Channel 1 negative input connected to WCTB amplifier
 #define ADS1298_WCT2_WCTB_CH2POS		(0b010u << 3)	//	010 = Channel 2 positive input connected to WCTB amplifier
@@ -433,7 +427,7 @@ void ADS_test();
 #define ADS1298_WCT2_WCTB_CH3NEG		(0b101u << 3)	//	101 = Channel 3 negative input connected to WCTB amplifier
 #define ADS1298_WCT2_WCTB_CH4POS		(0b110u << 3)	//	110 = Channel 4 positive input connected to WCTB amplifier
 #define ADS1298_WCT2_WCTB_CH4NEG		(0b111u << 3)	//	111 = Channel 4 negative input connected to WCTB amplifier
-														// WCT Amplifier C selection
+// WCT Amplifier C selection
 #define ADS1298_WCT2_WCTC_CH1POS		(0b000u << 0)	//	000 = Channel 1 positive input connected to WCTC amplifier
 #define ADS1298_WCT2_WCTC_CH1NEG		(0b001u << 0)	//	001 = Channel 1 negative input connected to WCTC amplifier
 #define ADS1298_WCT2_WCTC_CH2POS		(0b010u << 0)	//	010 = Channel 2 positive input connected to WCTC amplifier
@@ -442,5 +436,5 @@ void ADS_test();
 #define ADS1298_WCT2_WCTC_CH3NEG		(0b101u << 0)	//	101 = Channel 3 negative input connected to WCTC amplifier
 #define ADS1298_WCT2_WCTC_CH4POS		(0b110u << 0)	//	110 = Channel 4 positive input connected to WCTC amplifier
 #define ADS1298_WCT2_WCTC_CH4NEG		(0b111u << 0)	//	111 = Channel 4 negative input connected to WCTC amplifier
-
+#endif
 #endif //__ADS1298_H

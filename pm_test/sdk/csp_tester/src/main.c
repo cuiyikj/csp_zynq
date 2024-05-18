@@ -82,7 +82,10 @@ int32_t aVF= 0;
 // Leads V4, V5, V6:(Right Left, or lateral)
 
 extern uint8_t reg_ini_normal[25];
+uint8_t read_spi = 0;
+uint8_t ret = 0;
 
+uint8_t spi_index = 0;
 
 int main()
 {
@@ -102,7 +105,16 @@ int main()
     printf("spi ready %d\n\r", read_gpio(0));
     ADS_reset();
     ADS_Init(reg_ini_normal);
+	ADS_START();
+	ADS_RDATAC();
+	while(1)
+	{
+    	usleep(57);
+		ADS_RDATA();
+    }
 
+
+	HAL_Delay(100);
     while(1)
     {
     	ADS_START();

@@ -36,7 +36,7 @@ int spi_ps_init(void)
 	Status = XSpiPs_SetOptions(&SpiInstance, XSPIPS_MASTER_OPTION | XSPIPS_CLK_PHASE_1_OPTION);
 
 
-	Status = XSpiPs_SetClkPrescaler(&SpiInstance, XSPIPS_CLK_PRESCALE_256);
+	Status = XSpiPs_SetClkPrescaler(&SpiInstance, XSPIPS_CLK_PRESCALE_32);
 
 
 	XSpiPs_SetSlaveSelect(&SpiInstance, 0x00);
