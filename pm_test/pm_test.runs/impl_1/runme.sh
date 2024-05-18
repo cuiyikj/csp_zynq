@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/git/csp_zynq/pm_test/pm_test.runs/impl_1'
+HD_PWD='C:/project/zynq/pm_test/pm_test.runs/impl_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

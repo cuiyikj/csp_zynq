@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "C:/git/csp_zynq/pm_test/pm_test.runs/impl_1/pm_zynq_wrapper.tcl"
+  variable script "C:/project/zynq/pm_test/pm_test.runs/impl_1/pm_zynq_wrapper.tcl"
   variable category "vivado_impl"
 }
 
@@ -125,7 +125,7 @@ set rc [catch {
   create_msg_db write_bitstream.pb
   set_param chipscope.maxJobs 8
   open_checkpoint pm_zynq_wrapper_routed.dcp
-  set_property webtalk.parent_dir C:/git/csp_zynq/pm_test/pm_test.cache/wt [current_project]
+  set_property webtalk.parent_dir C:/project/zynq/pm_test/pm_test.cache/wt [current_project]
 set_property TOP pm_zynq_wrapper [current_fileset]
 OPTRACE "read constraints: write_bitstream" START { }
 OPTRACE "read constraints: write_bitstream" END { }

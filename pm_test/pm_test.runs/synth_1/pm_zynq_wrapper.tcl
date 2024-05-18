@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/git/csp_zynq/pm_test/pm_test.runs/synth_1/pm_zynq_wrapper.tcl"
+  variable script "C:/project/zynq/pm_test/pm_test.runs/synth_1/pm_zynq_wrapper.tcl"
   variable category "vivado_synth"
 }
 
@@ -77,8 +77,8 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir C:/git/csp_zynq/pm_test/pm_test.cache/wt [current_project]
-set_property parent.project_path C:/git/csp_zynq/pm_test/pm_test.xpr [current_project]
+set_property webtalk.parent_dir C:/project/zynq/pm_test/pm_test.cache/wt [current_project]
+set_property parent.project_path C:/project/zynq/pm_test/pm_test.xpr [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
@@ -89,6 +89,7 @@ OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib C:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/hdl/pm_zynq_wrapper.v
 add_files C:/project/zynq/pm_test/pm_test.srcs/sources_1/bd/pm_zynq/pm_zynq.bd
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_xbar_0/pm_zynq_xbar_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_auto_pc_0/pm_zynq_auto_pc_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_board.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0.xdc]
@@ -99,7 +100,6 @@ set_property used_in_implementation false [get_files -all c:/project/zynq/pm_tes
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_rst_ps7_0_100M_0/pm_zynq_rst_ps7_0_100M_0_board.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_rst_ps7_0_100M_0/pm_zynq_rst_ps7_0_100M_0.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_rst_ps7_0_100M_0/pm_zynq_rst_ps7_0_100M_0_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_auto_pc_0/pm_zynq_auto_pc_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/pm_zynq_ooc.xdc]
 
 OPTRACE "Adding files" END { }

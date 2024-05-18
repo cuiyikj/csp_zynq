@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.1 (win64) Build 3526262 Mon Apr 18 15:48:16 MDT 2022
-| Date         : Sat May 11 22:24:11 2024
+| Date         : Sun Apr 28 06:56:54 2024
 | Host         : DESKTOP-RIP2140 running 64-bit major release  (build 9200)
 | Command      : report_utilization -file pm_zynq_wrapper_utilization_synth.rpt -pb pm_zynq_wrapper_utilization_synth.pb
 | Design       : pm_zynq_wrapper

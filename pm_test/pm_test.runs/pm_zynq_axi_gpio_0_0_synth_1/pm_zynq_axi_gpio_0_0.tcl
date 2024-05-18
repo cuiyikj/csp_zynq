@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0.tcl"
+  variable script "C:/project/zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0.tcl"
   variable category "vivado_synth"
 }
 
@@ -79,8 +79,8 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir C:/git/csp_zynq/pm_test/pm_test.cache/wt [current_project]
-set_property parent.project_path C:/git/csp_zynq/pm_test/pm_test.xpr [current_project]
+set_property webtalk.parent_dir C:/project/zynq/pm_test/pm_test.cache/wt [current_project]
+set_property parent.project_path C:/project/zynq/pm_test/pm_test.xpr [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
@@ -107,7 +107,7 @@ set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 1
 OPTRACE "Configure IP Cache" START { }
 
-set cacheID [config_ip_cache -export -no_bom  -dir C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1 -new_name pm_zynq_axi_gpio_0_0 -ip [get_ips pm_zynq_axi_gpio_0_0]]
+set cacheID [config_ip_cache -export -no_bom  -dir C:/project/zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1 -new_name pm_zynq_axi_gpio_0_0 -ip [get_ips pm_zynq_axi_gpio_0_0]]
 
 OPTRACE "Configure IP Cache" END { }
 if { $cacheID == "" } {
@@ -162,7 +162,7 @@ create_report "pm_zynq_axi_gpio_0_0_synth_1_synth_report_utilization_0" "report_
 OPTRACE "synth reports" END { }
 
 if { [catch {
-  file copy -force C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0.dcp c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0.dcp
+  file copy -force C:/project/zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0.dcp c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0.dcp
 } _RESULT ] } { 
   send_msg_id runtcl-3 status "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
   error "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
@@ -197,32 +197,32 @@ if { [catch {
 
 
 if { [catch {
-  file copy -force C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0.dcp c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0.dcp
+  file copy -force C:/project/zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0.dcp c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0.dcp
 } _RESULT ] } { 
   send_msg_id runtcl-3 status "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
   error "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
 }
 
 if { [catch {
-  file rename -force C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0_stub.v c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_stub.v
+  file rename -force C:/project/zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0_stub.v c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_stub.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a Verilog synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  file rename -force C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0_stub.vhdl c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_stub.vhdl
+  file rename -force C:/project/zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0_stub.vhdl c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_stub.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a VHDL synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  file rename -force C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0_sim_netlist.v c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_sim_netlist.v
+  file rename -force C:/project/zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0_sim_netlist.v c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_sim_netlist.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the Verilog functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }
 
 if { [catch {
-  file rename -force C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0_sim_netlist.vhdl c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_sim_netlist.vhdl
+  file rename -force C:/project/zynq/pm_test/pm_test.runs/pm_zynq_axi_gpio_0_0_synth_1/pm_zynq_axi_gpio_0_0_sim_netlist.vhdl c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_0_0/pm_zynq_axi_gpio_0_0_sim_netlist.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the VHDL functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }

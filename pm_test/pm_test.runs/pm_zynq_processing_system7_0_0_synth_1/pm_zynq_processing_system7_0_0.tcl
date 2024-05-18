@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_processing_system7_0_0_synth_1/pm_zynq_processing_system7_0_0.tcl"
+  variable script "C:/project/zynq/pm_test/pm_test.runs/pm_zynq_processing_system7_0_0_synth_1/pm_zynq_processing_system7_0_0.tcl"
   variable category "vivado_synth"
 }
 
@@ -79,8 +79,8 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir C:/git/csp_zynq/pm_test/pm_test.cache/wt [current_project]
-set_property parent.project_path C:/git/csp_zynq/pm_test/pm_test.xpr [current_project]
+set_property webtalk.parent_dir C:/project/zynq/pm_test/pm_test.cache/wt [current_project]
+set_property parent.project_path C:/project/zynq/pm_test/pm_test.xpr [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
@@ -124,7 +124,7 @@ create_report "pm_zynq_processing_system7_0_0_synth_1_synth_report_utilization_0
 OPTRACE "synth reports" END { }
 
 if { [catch {
-  file copy -force C:/git/csp_zynq/pm_test/pm_test.runs/pm_zynq_processing_system7_0_0_synth_1/pm_zynq_processing_system7_0_0.dcp c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_processing_system7_0_0/pm_zynq_processing_system7_0_0.dcp
+  file copy -force C:/project/zynq/pm_test/pm_test.runs/pm_zynq_processing_system7_0_0_synth_1/pm_zynq_processing_system7_0_0.dcp c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_processing_system7_0_0/pm_zynq_processing_system7_0_0.dcp
 } _RESULT ] } { 
   send_msg_id runtcl-3 status "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
   error "ERROR: Unable to successfully create or copy the sub-design checkpoint file."

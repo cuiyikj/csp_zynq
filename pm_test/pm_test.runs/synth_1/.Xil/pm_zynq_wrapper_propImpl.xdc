@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc rfile:../../../../../../project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc rfile:../../../pm_test.srcs/constrs_1/new/pm_test.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:4 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN W14 [get_ports UART_ARM_1_txd]
 set_property src_info {type:XDC file:1 line:5 export:INPUT save:INPUT read:READ} [current_design]
