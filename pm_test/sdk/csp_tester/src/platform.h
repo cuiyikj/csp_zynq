@@ -32,10 +32,10 @@
 
 #ifndef __PLATFORM_H_
 #define __PLATFORM_H_
-
+#include "xscugic.h"
 #include "platform_config.h"
 
-void init_platform();
+void init_platform(XScuGic *Intc);
 void cleanup_platform();
 
 #endif

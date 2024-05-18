@@ -55,8 +55,9 @@
 #include "spi_ps.h"
 #include "ads1298.h"
 #include "ps_uart.h"
+#include "xscugic.h"
 
-
+XScuGic g_intc;
 
 uint32_t loop_index = 0;
 int32_t adc_data[16] = {0};
@@ -80,72 +81,80 @@ int32_t aVF= 0;
 // Leads V1, V2, V3: (Posterior Anterior)
 // Leads V4, V5, V6:(Right Left, or lateral)
 
+extern uint8_t reg_ini_normal[25];
+
 
 int main()
 {
     int i;
-    init_platform();
+
+    init_platform(&g_intc);
     print("\r\n\r\n");
     //start_cpu1();
     print("***** CPS tester start ******\r\n");
 
     ps_uart_init();
+    ps_intrrupt_init(&g_intc);
+
     main_led_gpio_init();
     main_gpio_init();
     spi_ps_init();
     printf("spi ready %d\n\r", read_gpio(0));
     ADS_reset();
-    ADS_Init();
+    ADS_Init(reg_ini_normal);
+
     while(1)
     {
     	ADS_START();
     	usleep(2);
     	ADS_RDATA();
-	lead_I = adc_data[1];
-	lead_II = adc_data[2];
-	lead_III = ecg_adc_data[1] - ecg_adc_data[0];
-	// aVL = (I + III)/2
-	// aVR = (- I -II)/2
-	// aVF= ( II + III)/2
-	
-	ecg_adc_data[0] = lead_I;
-	ecg_adc_data[1] = lead_II;
-	ecg_adc_data[2] = lead_III;
-	ecg_adc_data[3] = (I + III)/2;
-	ecg_adc_data[4] = (- I -II)/2;
-	ecg_adc_data[5] = ( II + III)/2;
-	ecg_adc_data[6] = ecg_adc_data[7] ;
-	ecg_adc_data[7] = ecg_adc_data[3] ;
-	ecg_adc_data[8] = ecg_adc_data[4] ;
-	ecg_adc_data[9] = ecg_adc_data[5] ;
-	ecg_adc_data[10] = ecg_adc_data[6] ;
-	ecg_adc_data[11] = ecg_adc_data[0] ;
+		lead_I = adc_data[1];
+		lead_II = adc_data[2];
+		lead_III = ecg_adc_data[1] - ecg_adc_data[0];
+		// aVL = (I + III)/2
+		// aVR = (- I -II)/2
+		// aVF= ( II + III)/2
+
+		ecg_adc_data[0] = lead_I;
+		ecg_adc_data[1] = lead_II;
+		ecg_adc_data[2] = lead_III;
+		ecg_adc_data[3] = (lead_I + lead_III)/2;
+		ecg_adc_data[4] = (- lead_I -lead_II)/2;
+		ecg_adc_data[5] = ( lead_II + lead_III)/2;
+		ecg_adc_data[6] = ecg_adc_data[7] ;
+		ecg_adc_data[7] = ecg_adc_data[3] ;
+		ecg_adc_data[8] = ecg_adc_data[4] ;
+		ecg_adc_data[9] = ecg_adc_data[5] ;
+		ecg_adc_data[10] = ecg_adc_data[6] ;
+		ecg_adc_data[11] = ecg_adc_data[0] ;
    
 	    
 	    
     	ps_uart_sent_adc((uint8_t*)adc_data, 32);
-
+		process_uart_cmd();
     	usleep(610);
 
     	if (loop_index%1000 == 0)
     	{
     		flash_led();
-			printf("*** read adc\n\r");
-			for( int i = 0; i < 8; i++)
-			{
-				double temp = 0;
-				if (adc_data[i] <= 0x7fffff)
-				{
-					temp = (double)adc_data[i]/(double)0x7fffff;
-				}
-				else
-				{
-					temp = (double)adc_data[i]/(double)0x7fffff;
-				}
 
-				printf("new acd%d = %x: %f\r\n", i+1, (uint)adc_data[i], temp);
-			}
-			printf("\r\n");
+
+//			printf("*** read adc\n\r");
+//			for( int i = 0; i < 8; i++)
+//			{
+//				double temp = 0;
+//				if (adc_data[i] <= 0x7fffff)
+//				{
+//					temp = (double)adc_data[i]/(double)0x7fffff;
+//				}
+//				else
+//				{
+//					temp = (double)adc_data[i]/(double)0x7fffff;
+//				}
+//
+//				printf("new acd%d = %x: %f\r\n", i+1, (uint)adc_data[i], temp);
+//			}
+//			printf("\r\n");
 
     	}
     	loop_index++;

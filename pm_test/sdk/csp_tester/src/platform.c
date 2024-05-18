@@ -34,7 +34,7 @@
 #include "xil_cache.h"
 
 #include "platform_config.h"
-
+#include "xscugic.h"
 /*
  * Uncomment one of the following two lines, depending on the target,
  * if ps7/psu init source files are added in the source directory for
@@ -88,8 +88,38 @@ init_uart()
     /* Bootrom/BSP configures PS7/PSU UART to 115200 bps */
 }
 
-void
-init_platform()
+
+void platform_setup_interrupts(XScuGic *intc_ptr)
+{
+//	XScuGic_Config *IntcConfig;
+//	IntcConfig=XScuGic_LookupConfig(INTC_DEVICE_ID);
+//	XScuGic_CfgInitialize(intc_ptr,IntcConfig,IntcConfig->CpuBaseAddress);
+//
+//	Xil_ExceptionInit();
+//	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
+//			(Xil_ExceptionHandler)XScuGic_InterruptHandler,
+//			intc_ptr);
+//	Xil_ExceptionEnable();
+//
+//	XScuGic_SetPriorityTriggerType(intc_ptr,TIMER_IRPT_INTR,16,1);
+//
+//	XScuGic_Connect(intc_ptr,TIMER_IRPT_INTR,
+//			(Xil_ExceptionHandler)timer_callback,
+//			(void *)&TimerInstance);
+//
+//	XScuGic_Enable(intc_ptr,TIMER_IRPT_INTR);
+//
+//
+//
+//	XScuGic_Connect(intc_ptr, SOFT_INTR_ID_TO_CPU0, (Xil_ExceptionHandler)soft_intr_handler, (void *)intc_ptr);
+//	XScuGic_Enable(intc_ptr, SOFT_INTR_ID_TO_CPU0); //CPU0 int
+//
+//	Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);
+
+}
+
+
+void init_platform(XScuGic *Intc)
 {
     /*
      * If you want to run this example outside of SDK,
@@ -102,6 +132,7 @@ init_platform()
     /* psu_init();*/
     enable_caches();
     init_uart();
+    platform_setup_interrupts(Intc);
 }
 
 void

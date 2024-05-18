@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="csp_tester" location="C:/zynq/pm_test/sdk/csp_tester" platform="C:/zynq/pm_test/sdk/pm_board/export/pm_board/pm_board.xpfm" platformUID="xilinx:pynq-z2::0.0(custom)" systemProject="csp_tester_system" sysConfig="pm_board" runtime="C/C++" cpu="standalone_domain" cpuInstance="ps7_cortexa9_0" os="standalone" mssSignature="c22718338f6fe612d0e39342e48544fc">
+  <configuration name="Debug" id="xilinx.gnu.armv7.exe.debug.1726381793">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+    <lastBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <configuration name="Release" id="xilinx.gnu.armv7.exe.release.958322755" dirty="true">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <template appTemplateName="hello_world"/>
+</sdkproject:SdkProject>

@@ -66,7 +66,7 @@ extern bool verbose;
 
 extern int32_t channelData [16];
 
-void ADS_Init(void);
+void ADS_Init(uint8_t* reg_ini);
 
 void ADS_RDATAC(void);
 void ADS_SDATAC(void);

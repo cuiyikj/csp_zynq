@@ -11,8 +11,94 @@ bool intDRDY = false; // Flag to ready data from ADS1298
 bool isDaisy = false;		// does this have a daisy chain board?
 
 int stat_1, stat_2;    	// used to hold the status register for boards 1 and 2
+uint8_t regData[24];
 
-uint8_t regData[24];		// array with data from all registers
+uint8_t reg_ini_normal[25]=
+{
+	0x84, //0
+	0x35,
+	0xc0,
+	0x00,
+	0x10,  //4
+	0x10,
+	0x10,
+	0x10,
+	0x10,
+	0x10,
+	0x10,  //10
+	0x10,  //11
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x0f,  //19
+	0x00,  //20
+	0x00,  //21
+	0x08,
+	0xfa,  //23
+	0xdc,  //24
+};
+
+uint8_t reg_ini_noise[25]=
+{
+	0x84, //0
+	0x35,
+	0xc0,
+	0x00,
+	0x11,  //4
+	0x11,
+	0x11,
+	0x11,
+	0x11,
+	0x11,
+	0x11,  //10
+	0x11,  //11
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x0f,  //19
+	0x00,  //20
+	0x00,  //21
+	0x08,
+	0xfa,  //23
+	0xdc,  //24
+};
+
+uint8_t reg_ini_calibrate[25]=
+{
+	0x84, //0
+	0x35,
+	0xc0,
+	0x00,
+	0x15,  //4
+	0x15,
+	0x15,
+	0x15,
+	0x15,
+	0x15,
+	0x15,  //10
+	0x15,  //11
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x00,
+	0x0f,  //19
+	0x00,  //20
+	0x00,  //21
+	0x08,
+	0xfa,  //23
+	0xdc,  //24
+};
 int32_t channelData [16];	// array used when reading channel data board 1+2
 
 uint32_t pila = 0;
@@ -29,16 +115,17 @@ void ADS_test()
 
 void ADS_reset()
 {
+	set_gpio(2,1);
 	set_gpio(3,1);
 	HAL_Delay(200);
 	set_gpio(3,0);
 	HAL_Delay(200);
 	set_gpio(3,1);
 
-	HAL_Delay(200);
+	HAL_Delay(20);
 	ADS_RESET();
 
-	HAL_Delay(200);
+	HAL_Delay(2);
 	ADS_SDATAC();
 //	while(1)
 //	{
@@ -53,19 +140,12 @@ unsigned char writeVals[25] = {0, 0, 0, 0, 0, \
 							   0, 0, 0, 0, 0, \
 							   0, 0, 0, 0, 0};
 
-void ADS_Init()
+void ADS_Init(uint8_t* reg_ini)
 {
 
 #if 1
-	ADS_WREG(CONFIG1,0x06);
-
-
-	HAL_Delay(100);
-
-
-
 	//Work settings
-	ADS_WREG(CONFIG1,0x84); ///???? 0x84 => HR mode and 1k sps
+	ADS_WREG(CONFIG1,reg_ini[0]); ///???? 0x84 => HR mode and 1k sps
 	//CONFIG1: Configuration Register 1 (address = 01h) (reset = 06h)
 	//6=> 0000 0110
 	//0 = High-resolution or low-power mode : 0 = LP mode
@@ -76,8 +156,8 @@ void ADS_Init()
 	//0 = Reserved
 	//110: Output data rate: fMOD / 1024 (HR Mode: 500 SPS, LP Mode: 250 SPS
 
-	HAL_Delay(100);
-	ADS_WREG(CONFIG2,0x35);
+	HAL_Delay(10);
+	ADS_WREG(CONFIG2, reg_ini[1]);
 	//CONFIG2: Configuration Register 2 (address = 02h) (reset = 40h)
 	//Configuration register 2 configures the test signal generation.
 	//0 = Always write 0h
@@ -90,8 +170,8 @@ void ADS_Init()
 	//0 = Test signal frequency
 	//0 = Test signal frequency: 00 Pulsed at fCLK / 2^21
 
-	HAL_Delay(100);
-	ADS_WREG(CONFIG3,0xc0);
+	HAL_Delay(10);
+	ADS_WREG(CONFIG3, reg_ini[2]);
 	//CONFIG3: Configuration Register 3 (address = 03h) (reset = 40h)
 	//Configuration register 3 configures multireference and RLD operation
 	//dc => 1101 1100
@@ -106,7 +186,7 @@ void ADS_Init()
 	//0 = RLD is connected
 
 
-	HAL_Delay(100);
+	HAL_Delay(10);
 
 	ADS_WREG(LOFF,0x00);
 	//03=> 0000 0011
@@ -120,7 +200,7 @@ void ADS_Init()
 	//1 = Lead-off frequency
 	//1 = Lead-off frequency: 11 = DC lead-off detection turned on
 
-	HAL_Delay(100);
+	HAL_Delay(10);
 
 
 	//0x91 power down and shot
@@ -157,34 +237,34 @@ void ADS_Init()
 	110 = RLD_DRP (positive electrode is the driver)
 	111 = RLD_DRN (negative electrode is the driver)
 */
-	ADS_WREG(CH1SET,0x10);
-	HAL_Delay(100);
-	ADS_WREG(CH2SET,0x10);
-	HAL_Delay(100);
-	ADS_WREG(CH3SET,0x10);
-	HAL_Delay(100);
-	ADS_WREG(CH4SET,0x10);
-	HAL_Delay(100);
-	ADS_WREG(CH5SET,0x10);
+	ADS_WREG(CH1SET,reg_ini[4]);
+	HAL_Delay(10);
+	ADS_WREG(CH2SET,reg_ini[5]);
+	HAL_Delay(10);
+	ADS_WREG(CH3SET,reg_ini[6]);
+	HAL_Delay(10);
+	ADS_WREG(CH4SET,reg_ini[7]);
+	HAL_Delay(10);
+	ADS_WREG(CH5SET,reg_ini[8]);
 	// Channel input :101 = Test signal
-	HAL_Delay(100);
-	ADS_WREG(CH6SET,0x10);
+	HAL_Delay(10);
+	ADS_WREG(CH6SET,reg_ini[9]);
 	// Channel input :101 = Test signal
-	HAL_Delay(100);
-	ADS_WREG(CH7SET,0x10);
+	HAL_Delay(10);
+	ADS_WREG(CH7SET,reg_ini[10]);
 	// PGA gain : 110 = 12 , Channel input :101 = Test signal
 
-	HAL_Delay(100);
-	ADS_WREG(CH8SET,0x10);
+	HAL_Delay(10);
+	ADS_WREG(CH8SET,reg_ini[11]);
 	// PGA gain : 110 = 12 , Channel input :101 = Test signal
-	HAL_Delay(100);
+	HAL_Delay(10);
 
 	ADS_WREG(BIAS_SENSP,0x00);
 	//RLD_SENSP: RLD Positive Signal Derivation Register (address = 0Dh) (reset = 00h)
 	// 0000 0000
 	// INxP to RLD Route channel x positive signal into RLD derivation, 0: Disabled
 
-	HAL_Delay(100);
+	HAL_Delay(10);
 	ADS_WREG(BIAS_SENSN,0x00);
 	// RLD_SENSN: RLD Negative Signal Derivation Register (address = 0Eh) (reset = 00h)
 	// INxP to RLD Route channel x negative signal into RLD derivation, 0: Disabled
@@ -218,7 +298,7 @@ void ADS_Init()
 	// This register stores the status of whether the negative electrode on each channel is on or off.
 	HAL_Delay(10);
 
-	ADS_WREG(GPIO,0x00);
+	ADS_WREG(GPIO, reg_ini[19]);
 	HAL_Delay(10);
 
 	ADS_WREG(MISC1,0x00);
@@ -252,7 +332,7 @@ void ADS_Init()
 
 	HAL_Delay(10);
 
-	ADS_WREG(CONFIG4,0x08);
+	ADS_WREG(CONFIG4, reg_ini[22]);
 	//CONFIG4: Configuration Register 4 (address = 17h) (reset = 00h)
 	// 0 = Respiration modulation frequency
 	// 0 = Respiration modulation frequency
@@ -266,7 +346,7 @@ terminals.
 */
 	HAL_Delay(10);
 
-	ADS_WREG(WCT1,0xFA);
+	ADS_WREG(WCT1,reg_ini[23]);
 	//Wilson Central Terminal and Augmented Lead Control Register (address = 18h) (reset = 00h)
 	// 0 = Enable (WCTA + WCTB)/2 to the negative input of channel 6 : 0 = Disabled
 	// 0 = Enable (WCTA + WCTC)/2 to the negative input of channel 5 : 0 = Disabled
@@ -280,7 +360,7 @@ terminals.
 
 	HAL_Delay(10);
 
-	ADS_WREG(WCT2,0xDC);
+	ADS_WREG(WCT2, reg_ini[24]);
 	// WCT2: Wilson Central Terminal Control Register (address = 19h) (reset = 00h)
 	// 1 = Power-down WCTC : 1 = Powered on
 	// 1 = Power-down WCTB : 1 = Powered on
