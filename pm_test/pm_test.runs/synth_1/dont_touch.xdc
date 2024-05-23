@@ -9,9 +9,6 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq || 
 # IP: bd/pm_zynq/ip/pm_zynq_xbar_0/pm_zynq_xbar_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_xbar_0 || ORIG_REF_NAME==pm_zynq_xbar_0} -quiet] -quiet
 
-# IP: bd/pm_zynq/ip/pm_zynq_auto_pc_0/pm_zynq_auto_pc_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_auto_pc_0 || ORIG_REF_NAME==pm_zynq_auto_pc_0} -quiet] -quiet
-
 # IP: bd/pm_zynq/ip/pm_zynq_axi_interconnect_0_0/pm_zynq_axi_interconnect_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_axi_interconnect_0_0 || ORIG_REF_NAME==pm_zynq_axi_interconnect_0_0} -quiet] -quiet
 
@@ -26,5 +23,11 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_pro
 
 # IP: bd/pm_zynq/ip/pm_zynq_rst_ps7_0_100M_0/pm_zynq_rst_ps7_0_100M_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_rst_ps7_0_100M_0 || ORIG_REF_NAME==pm_zynq_rst_ps7_0_100M_0} -quiet] -quiet
+
+# IP: bd/pm_zynq/ip/pm_zynq_axi_gpio_2_0/pm_zynq_axi_gpio_2_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_axi_gpio_2_0 || ORIG_REF_NAME==pm_zynq_axi_gpio_2_0} -quiet] -quiet
+
+# IP: bd/pm_zynq/ip/pm_zynq_auto_pc_0/pm_zynq_auto_pc_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_auto_pc_0 || ORIG_REF_NAME==pm_zynq_auto_pc_0} -quiet] -quiet
 
 # XDC: c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/pm_zynq_ooc.xdc

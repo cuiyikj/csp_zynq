@@ -3,9 +3,16 @@
 #include "ADS1298.h"
 #include "spi_ps.h"
 #include "gpio.h"
-
+#include "adc_queue.h"
+#include "sleep.h"
+#include "ps_uart.h"
 /*------------------------------- VARIABLES -----------------------------*/
-extern int32_t adc_data[16];
+
+extern ECG_ADC adc_data;
+
+uint8_t adc_sps = SPS_1K;
+
+
 bool intDRDY = false; // Flag to ready data from ADS1298
 
 bool isDaisy = false;        // does this have a daisy chain board?
@@ -15,7 +22,7 @@ uint8_t regData[24];
 
 uint8_t reg_ini_normal[25]=
 {
-    0x82, //0
+    0x85, //0x85 => 1k  0x82=> 8k
     0x35,
     0xc0,
     0x00,
@@ -99,7 +106,8 @@ uint8_t reg_ini_calibrate[25]=
     0xfa,  //23
     0xdc,  //24
 };
-int32_t channelData [16];    // array used when reading channel data board 1+2
+int32_t channelData [ECG_CHANNEL_SIZE];    // array used when reading channel data board 1+2
+int32_t send_channelData [ECG_CHANNEL_SIZE];    // array used when reading channel data board 1+2
 uint32_t pila = 0;
 
 /*------------------------------- FUNCTIIONS -----------------------------*/
@@ -128,8 +136,9 @@ void ADS_reset()
 
 void ADS_Init(uint8_t* reg_ini)
 {
-    //ADS_WREGS(1, 24, reg_ini);
-#if 1
+    ADS_WREGS(1, 24, reg_ini);
+    cb_adc_reset();
+#if 0
     //Work settings
     ADS_WREG(CONFIG1, reg_ini[0]);
     // 0x82 => HR mode and 8k sps
@@ -451,6 +460,7 @@ void ADS_RREGS(uint8_t _address, uint8_t _numRegistersMinusOne)
 
     //  RREG expects 001rrrrr where rrrrr = _address
     SPI_CS_LOW();
+    usleep(1);
     transferSPI( opcode1);
     usleep(2);
     transferSPI( _numRegistersMinusOne);
@@ -470,6 +480,7 @@ void ADS_WREG(uint8_t _address, uint8_t _value)
 
     //  WREG expects 010rrrrr where rrrrr = _address
     SPI_CS_LOW();
+    usleep(1);
     transferSPI( opcode1);
     usleep(2);
     transferSPI( 0x00);
@@ -488,16 +499,18 @@ void ADS_WREGS(uint8_t _address, uint8_t _numRegistersMinusOne, uint8_t *reg_ini
 
     //  WREG expects 010rrrrr where rrrrr = _address
     SPI_CS_LOW();
+    usleep(5);
     transferSPI( opcode1);
-    usleep(2);
+    usleep(5);
     transferSPI( _numRegistersMinusOne);
 
-    usleep(2);
-    for (i=_address; i <=(_address + _numRegistersMinusOne); i++)
+    usleep(5);
+    for (i=0; i <=(_address + _numRegistersMinusOne); i++)
     {
         transferSPI( reg_ini[i]);
-        usleep(2);
+        usleep(5);
     }
+    usleep(5);
     SPI_CS_HIGH();
 }
 
@@ -513,6 +526,7 @@ void ADS_updateChannelData()
         channelData[i] = 0;
     }
     SPI_CS_LOW();
+    usleep(1);
     // READ CHANNEL DATA FROM FIRST ADS IN DAISY LINE
     //  read 3 byte status register from ADS 1 (1100+LOFF_STATP+LOFF_STATN+GPIO[7:4])
     for(i = 0; i < 3; i++)
@@ -530,6 +544,7 @@ void ADS_updateChannelData()
             channelData[i] = (channelData[i]<<8) | inByte;
         }
     }
+    usleep(1);
     SPI_CS_HIGH();
 }
 
@@ -550,8 +565,9 @@ void ADS_RDATA()
         channelData[i] = 0;
     }
     SPI_CS_LOW();
+    usleep(1);
     transferSPI( _RDATA);
-    usleep(2);
+    usleep(1);
 
     // READ CHANNEL DATA FROM FIRST ADS IN DAISY LINE
     //  read 3 byte status register (1100+LOFF_STATP+LOFF_STATN+GPIO[7:4]
@@ -569,9 +585,10 @@ void ADS_RDATA()
         inByte3 = transferSPI( 0x00);
         channelData[i] = (inByte1 << 16) | (inByte2 << 8) | inByte3;
     }
+    usleep(1);
     SPI_CS_HIGH();
     // convert 3 byte 2's compliment to 4 byte 2's compliment
-    for( i = 0; i<nchan; i++)
+    for( i = 0; i < ECG_CHANNEL_SIZE; i++)
     {
         if( (channelData[i] & 0x00800000) == 0x00800000  )
         {
@@ -581,11 +598,41 @@ void ADS_RDATA()
         {
             channelData[i] &= 0x00FFFFFF;
         }
+        adc_data.adc_ecg[i] = channelData[i];
         //channelData[i] = channelData[i] << 8;
-        adc_data[i] = channelData[i];
         //printf("acd%d= %x \r\n", i,channelData[i]);
     }
-    //printf("\r\n");
+    send_channelData[0] = channelData[1];
+    send_channelData[1] = channelData[2];
+    send_channelData[2] = channelData[7];
+    send_channelData[3] = channelData[3];
+    send_channelData[4] = channelData[4];
+    send_channelData[5] = channelData[5];
+    send_channelData[6] = channelData[6];
+    send_channelData[7] = channelData[0];
+
+    switch (adc_sps)
+	{
+	case SPS_1K:
+		ps_uart_sent_adc((uint8_t*)&send_channelData[0], 32);
+	break;
+	case SPS_2K:
+		ps_uart_sent_adc((uint8_t*)&send_channelData[0], 16);
+	break;
+
+	case SPS_4K:
+		ps_uart_sent_adc((uint8_t*)&send_channelData[0], 8);
+	break;
+
+	case SPS_8K:
+		//send_uart_0((uint8_t*)&send_channelData[0], 4);
+		ps_uart_sent_adc((uint8_t*)&send_channelData[0], 4);
+	break;
+
+	}
+
+    //cb_adc_put(&adc_data);
+    //printf("ADS_RDATA \r\n");
 
 }
 
@@ -700,4 +747,14 @@ void ADS_SendData()
 int32_t* getChannelData()
 {
     return channelData;
+}
+
+void set_adc_sps_rate(uint8_t rate)
+{
+	adc_sps = rate;
+}
+
+uint8_t get_adc_sps_rate(void)
+{
+	return adc_sps;
 }

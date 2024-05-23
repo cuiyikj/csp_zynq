@@ -56,19 +56,20 @@
 #include "ads1298.h"
 #include "ps_uart.h"
 #include "xscugic.h"
+#include "adc_queue.h"
 
 XScuGic g_intc;
 
 uint32_t loop_index = 0;
-int32_t adc_data[16] = {0};
-int32_t ecg_adc_data[12] = {0};
 
-int32_t lead_I = 0;
-int32_t lead_II = 0;
-int32_t lead_III = 0;
-int32_t aVL = 0;
-int32_t aVR = 0;
-int32_t aVF= 0;
+
+//int32_t ecg_adc_data[12] = {0};
+//int32_t lead_I = 0;
+//int32_t lead_II = 0;
+//int32_t lead_III = 0;
+//int32_t aVL = 0;
+//int32_t aVR = 0;
+//int32_t aVF= 0;
 
 // Lead I: RA (-) to LA (+) (Right Left, or lateral)
 // Lead II: RA (-) to LL (+) (Superior Inferior)
@@ -87,9 +88,16 @@ uint8_t ret = 0;
 
 uint8_t spi_index = 0;
 
+ECG_ADC adc_data;
+ECG_ADC read_adc_data;
+
+
+int32_t adc_ecg_detail[32];
+
+uint8_t uart_index = 0;
+
 int main()
 {
-    int i;
 
     init_platform(&g_intc);
     print("\r\n\r\n");
@@ -101,56 +109,95 @@ int main()
 
     main_led_gpio_init();
     main_gpio_init();
+    gpio_intrrupt_init(&g_intc);
     spi_ps_init();
-    printf("spi ready %d\n\r", read_gpio(0));
+//	while(1)
+//	{
+//		DEBUG_LOW();
+//		DEBUG_HIGH();
+//
+//		RESET_LOW();
+//		RESET_HIGH();
+//
+//		SPI_CS_LOW();
+//		SPI_CS_HIGH();
+//	}
+
     ADS_reset();
     ADS_Init(reg_ini_normal);
 	ADS_START();
 	ADS_RDATAC();
 	while(1)
 	{
-    	usleep(57);
-		ADS_RDATA();
+		process_uart_cmd();
+//		DEBUG_LOW();
+//		DEBUG_HIGH();
+
+		//printf("loop \n\r");
+		if (!cb_adc_empty())
+		{
+
+			//cb_adc_get(&read_adc_data);
+			//adc_ecg_detail[uart_index%8] = read_adc_data.adc_ecg[1];
+
+			//printf("cb_adc %d \n\r", uart_index%8);
+
+			//if ((uart_index%8) == 0)
+			{
+//				for (int i = 0; i< 8; i++)
+//				{
+//					read_adc_data.adc_ecg[8+i] = adc_ecg_detail[i];
+//				}
+				//printf("cb_adc %d \n\r", uart_index%8);
+				//set_gpio(3,1);
+				//ps_uart_sent_adc((uint8_t*)&read_adc_data, 4);
+				//set_gpio(3,0);
+
+
+				//printf("send %f\r\n", read_adc_data.adc_ecg[0]);
+				loop_index++;
+			}
+			uart_index++;
+		}
+//    	if (loop_index%1000 == 0)
+//    	{
+//    		flash_led();
+//    	}
+    	loop_index++;
+
     }
 
 
 	HAL_Delay(100);
-    while(1)
-    {
-    	ADS_START();
-    	usleep(2);
-    	ADS_RDATA();
-		lead_I = adc_data[1];
-		lead_II = adc_data[2];
-		lead_III = ecg_adc_data[1] - ecg_adc_data[0];
+//    while(1)
+//    {
+//    	ADS_START();
+//    	usleep(2);
+//    	ADS_RDATA();
+//		lead_I = adc_data[1];
+//		lead_II = adc_data[2];
+//		lead_III = ecg_adc_data[1] - ecg_adc_data[0];
 		// aVL = (I + III)/2
 		// aVR = (- I -II)/2
 		// aVF= ( II + III)/2
-
-		ecg_adc_data[0] = lead_I;
-		ecg_adc_data[1] = lead_II;
-		ecg_adc_data[2] = lead_III;
-		ecg_adc_data[3] = (lead_I + lead_III)/2;
-		ecg_adc_data[4] = (- lead_I -lead_II)/2;
-		ecg_adc_data[5] = ( lead_II + lead_III)/2;
-		ecg_adc_data[6] = ecg_adc_data[7] ;
-		ecg_adc_data[7] = ecg_adc_data[3] ;
-		ecg_adc_data[8] = ecg_adc_data[4] ;
-		ecg_adc_data[9] = ecg_adc_data[5] ;
-		ecg_adc_data[10] = ecg_adc_data[6] ;
-		ecg_adc_data[11] = ecg_adc_data[0] ;
-   
-	    
-	    
-    	ps_uart_sent_adc((uint8_t*)adc_data, 32);
-		process_uart_cmd();
-    	usleep(610);
-
-    	if (loop_index%1000 == 0)
-    	{
-    		flash_led();
-
-
+//		ecg_adc_data[0] = lead_I;
+//		ecg_adc_data[1] = lead_II;
+//		ecg_adc_data[2] = lead_III;
+//		ecg_adc_data[3] = (lead_I + lead_III)/2;
+//		ecg_adc_data[4] = (- lead_I -lead_II)/2;
+//		ecg_adc_data[5] = ( lead_II + lead_III)/2;
+//		ecg_adc_data[6] = ecg_adc_data[7] ;
+//		ecg_adc_data[7] = ecg_adc_data[3] ;
+//		ecg_adc_data[8] = ecg_adc_data[4] ;
+//		ecg_adc_data[9] = ecg_adc_data[5] ;
+//		ecg_adc_data[10] = ecg_adc_data[6] ;
+//		ecg_adc_data[11] = ecg_adc_data[0] ;
+//
+//
+//
+//    	ps_uart_sent_adc((uint8_t*)&adc_data, 32);
+//		process_uart_cmd();
+//    	usleep(610);
 //			printf("*** read adc\n\r");
 //			for( int i = 0; i < 8; i++)
 //			{
@@ -168,8 +215,6 @@ int main()
 //			}
 //			printf("\r\n");
 
-    	}
-    	loop_index++;
     	//    	printf("*****read adc\n\r");
     	//    	for( int i = 0; i < 8; i++)
     	//    	{
@@ -177,7 +222,9 @@ int main()
     	//    	}
     	//    	printf("\r\n");
     	//    	sleep(1);
-    }
+//    }
+
+
     cleanup_platform();
     return 0;
 }

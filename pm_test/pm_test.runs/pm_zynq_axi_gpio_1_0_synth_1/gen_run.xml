@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="pm_zynq_axi_gpio_1_0_synth_1" LaunchPart="xc7z020clg400-1" LaunchTime="1714021493">
+<GenRun Id="pm_zynq_axi_gpio_1_0_synth_1" LaunchPart="xc7z020clg400-1" LaunchTime="1716264531">
   <File Type="PA-TCL" Name="pm_zynq_axi_gpio_1_0.tcl"/>
+  <File Type="RDS-PROPCONSTRS" Name="pm_zynq_axi_gpio_1_0_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="pm_zynq_axi_gpio_1_0_reports.tcl"/>
   <File Type="RDS-RDS" Name="pm_zynq_axi_gpio_1_0.vds"/>
   <File Type="RDS-UTIL" Name="pm_zynq_axi_gpio_1_0_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="pm_zynq_axi_gpio_1_0_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="pm_zynq_axi_gpio_1_0.dcp"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="pm_zynq_axi_gpio_1_0_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="pm_zynq_axi_gpio_1_0_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="BlockSrcs" RelSrcDir="$PSRCDIR/pm_zynq_axi_gpio_1_0">
     <File Path="$PSRCDIR/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_1_0/pm_zynq_axi_gpio_1_0.xci">
       <FileInfo>

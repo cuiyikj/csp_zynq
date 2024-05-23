@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="pm_zynq_processing_system7_0_0_synth_1" LaunchPart="xc7z020clg400-1" LaunchTime="1714021493">
+<GenRun Id="pm_zynq_processing_system7_0_0_synth_1" LaunchPart="xc7z020clg400-1" LaunchTime="1716097770">
   <File Type="PA-TCL" Name="pm_zynq_processing_system7_0_0.tcl"/>
   <File Type="REPORTS-TCL" Name="pm_zynq_processing_system7_0_0_reports.tcl"/>
   <File Type="RDS-RDS" Name="pm_zynq_processing_system7_0_0.vds"/>

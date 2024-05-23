@@ -13,7 +13,11 @@
 
 #include "time.h"
 #include "ads1298.h"
+#include "adc_queue.h"
 
+extern uint8_t reg_ini_normal[25];
+extern uint8_t reg_ini_noise[25];
+extern uint8_t reg_ini_calibrate[25];
 
  uint8_t uart_recv_0[512];
  uint8_t uart_recv_1[512];
@@ -172,9 +176,7 @@ void send_uart_0(uint8_t* buf, uint16_t len)
 
 }
 
-extern uint8_t reg_ini_normal[25];
-extern uint8_t reg_ini_noise[25];
-extern uint8_t reg_ini_calibrate[25];
+
 
 void process_uart_cmd(void)
 {
@@ -227,6 +229,34 @@ void process_uart_cmd(void)
 					ADS_Init(reg_ini_calibrate);
 					printf("CMD_TEST_NOISE\r\n");
 				break;
+				case CMD_SPS_1K:
+					set_adc_sps_rate(SPS_1K);
+					reg_ini_normal[0]= 0x85; // 0x85=> 1k
+					ADS_reset();
+					ADS_Init(reg_ini_normal);
+					printf("SPS_1K\r\n");
+				break;
+				case CMD_SPS_2K:
+					set_adc_sps_rate(SPS_2K);
+					reg_ini_normal[0]= 0x84; // 0x84=> 2k
+					ADS_reset();
+					ADS_Init(reg_ini_normal);
+					printf("SPS_2K\r\n");
+				break;
+				case CMD_SPS_4K:
+					set_adc_sps_rate(SPS_4K);
+					reg_ini_normal[0]= 0x83; // 0x83=> 4k
+					ADS_reset();
+					ADS_Init(reg_ini_normal);
+					printf("SPS_4K\r\n");
+				break;
+				case CMD_SPS_8K:
+					set_adc_sps_rate(SPS_8K);
+					reg_ini_normal[0]= 0x82; // 0x82=> 8k
+					ADS_reset();
+					ADS_Init(reg_ini_normal);
+					printf("SPS_8K\r\n");
+				break;
 				}
 
 			}
@@ -247,7 +277,7 @@ void ps_uart_sent(uint8_t* data, uint16_t len)
 	//XUartPs_Send(&uart_inst, data, len);
 }
 
-uint8_t adc_buf[36];
+uint8_t adc_buf[ECG_CHANNEL_SIZE * 4 + 4];
 uint8_t adc_seq = 0;
 
 void ps_uart_sent_adc(uint8_t* data, uint16_t len)
@@ -255,7 +285,7 @@ void ps_uart_sent_adc(uint8_t* data, uint16_t len)
 	uint16_t crc_16 = 0;
 	uint16_t crc_seed = 0;
 	adc_buf[0] = 0x02;
-	adc_buf[1] = adc_seq;
+	adc_buf[1] = 0x5a;
 
 
 	memcpy(&adc_buf[4], data, len);

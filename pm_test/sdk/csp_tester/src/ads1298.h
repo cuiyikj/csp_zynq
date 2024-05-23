@@ -14,6 +14,7 @@
 #include "comlib.h"
 #include "sleep.h"
 #include "spi_ps.h"
+#include "adc_queue.h"
 
 
 #define _WAKEUP 					0x02 // Wake-up from standby mode
@@ -62,9 +63,18 @@
 #define CONFIG1_CLK_DIS_OUT			0x20
 #define CONFIG1_DR_250SPS			0x06
 
+
+typedef enum
+{
+    SPS_1K,             // 0x00
+    SPS_2K,             // 0x01
+    SPS_4K,             // 0x02
+    SPS_8K,             // 0x03
+} SPS_RATE;
+
 extern bool verbose;
 
-extern int32_t channelData [16];
+extern int32_t channelData [ECG_CHANNEL_SIZE];
 
 void ADS_Init(uint8_t* reg_ini);
 
@@ -89,6 +99,13 @@ void ADS_sendUSBData(void);
 
 void ADS_reset();
 void ADS_test();
+
+
+void set_adc_sps_rate(uint8_t rate);
+uint8_t get_adc_sps_rate(void);
+
+
+
 
 #if 0
 
