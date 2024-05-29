@@ -25,56 +25,101 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 15804
+INFO: [Synth 8-7075] Helper process launched with PID 23616
+
+*** Running vivado
+    with args -log pm_zynq_wrapper.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source pm_zynq_wrapper.tcl
+
+
+
+****** Vivado v2022.1 (64-bit)
+  **** SW Build 3526262 on Mon Apr 18 15:48:16 MDT 2022
+  **** IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+source pm_zynq_wrapper.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.1/data/ip'.
+Command: read_checkpoint -auto_incremental -incremental C:/project/zynq/pm_test/pm_test.srcs/utils_1/imports/synth_1/pm_zynq_wrapper.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/project/zynq/pm_test/pm_test.srcs/utils_1/imports/synth_1/pm_zynq_wrapper.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top pm_zynq_wrapper -part xc7z020clg400-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 16896
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Starting RTL Elaboration : Time (s): cpu = 00:00:00 ; elapsed = 00:00:03 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'pm_zynq_wrapper' [C:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/hdl/pm_zynq_wrapper.v:12]
-INFO: [Synth 8-6157] synthesizing module 'pm_zynq' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:408]
-INFO: [Synth 8-6157] synthesizing module 'pm_zynq_axi_gpio_0_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_0_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_axi_gpio_0_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_0_0_stub.v:5]
-INFO: [Synth 8-6157] synthesizing module 'pm_zynq_axi_gpio_1_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_1_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_axi_gpio_1_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_1_0_stub.v:5]
-INFO: [Synth 8-6157] synthesizing module 'pm_zynq_axi_gpio_2_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_2_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_axi_gpio_2_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_2_0_stub.v:5]
-INFO: [Synth 8-6157] synthesizing module 'pm_zynq_axi_interconnect_0_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:865]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:540]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq_axi_gpio_0_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_0_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_axi_gpio_0_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_0_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq_axi_gpio_1_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_1_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_axi_gpio_1_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_1_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq_axi_gpio_2_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_2_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_axi_gpio_2_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_2_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq_axi_gpio_3_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_3_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_axi_gpio_3_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_axi_gpio_3_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq_axi_interconnect_0_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1071]
 INFO: [Synth 8-6157] synthesizing module 'm00_couplers_imp_CWANWU' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:12]
 INFO: [Synth 8-6155] done synthesizing module 'm00_couplers_imp_CWANWU' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:12]
 INFO: [Synth 8-6157] synthesizing module 'm01_couplers_imp_1B4QRBH' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:144]
 INFO: [Synth 8-6155] done synthesizing module 'm01_couplers_imp_1B4QRBH' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:144]
 INFO: [Synth 8-6157] synthesizing module 'm02_couplers_imp_1XFZKUH' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:276]
 INFO: [Synth 8-6155] done synthesizing module 'm02_couplers_imp_1XFZKUH' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:276]
-INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_1AYRAXE' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1538]
-INFO: [Synth 8-6157] synthesizing module 'pm_zynq_auto_pc_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_auto_pc_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_auto_pc_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_auto_pc_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_1AYRAXE' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1538]
-INFO: [Synth 8-6157] synthesizing module 'pm_zynq_xbar_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_xbar_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_xbar_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_xbar_0_stub.v:5]
-WARNING: [Synth 8-7071] port 'm_axi_awprot' of module 'pm_zynq_xbar_0' is unconnected for instance 'xbar' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1497]
-WARNING: [Synth 8-7071] port 'm_axi_arprot' of module 'pm_zynq_xbar_0' is unconnected for instance 'xbar' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1497]
-WARNING: [Synth 8-7023] instance 'xbar' of module 'pm_zynq_xbar_0' has 40 connections declared, but only 38 given [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1497]
-INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_axi_interconnect_0_0' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:865]
-INFO: [Synth 8-6157] synthesizing module 'pm_zynq_processing_system7_0_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_processing_system7_0_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_processing_system7_0_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_processing_system7_0_0_stub.v:5]
-WARNING: [Synth 8-7071] port 'SPI0_SCLK_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:783]
-WARNING: [Synth 8-7071] port 'SPI0_MOSI_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:783]
-WARNING: [Synth 8-7071] port 'SPI0_MISO_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:783]
-WARNING: [Synth 8-7071] port 'SPI0_MISO_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:783]
-WARNING: [Synth 8-7071] port 'SPI0_SS1_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:783]
-WARNING: [Synth 8-7071] port 'SPI0_SS2_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:783]
-WARNING: [Synth 8-7071] port 'SPI0_SS_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:783]
-WARNING: [Synth 8-7023] instance 'processing_system7_0' of module 'pm_zynq_processing_system7_0_0' has 79 connections declared, but only 72 given [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:783]
-INFO: [Synth 8-6157] synthesizing module 'pm_zynq_rst_ps7_0_100M_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_rst_ps7_0_100M_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_rst_ps7_0_100M_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-12584-DESKTOP-RIP2140/realtime/pm_zynq_rst_ps7_0_100M_0_stub.v:5]
-WARNING: [Synth 8-7071] port 'mb_reset' of module 'pm_zynq_rst_ps7_0_100M_0' is unconnected for instance 'rst_ps7_0_100M' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:856]
-WARNING: [Synth 8-7071] port 'bus_struct_reset' of module 'pm_zynq_rst_ps7_0_100M_0' is unconnected for instance 'rst_ps7_0_100M' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:856]
-WARNING: [Synth 8-7071] port 'peripheral_reset' of module 'pm_zynq_rst_ps7_0_100M_0' is unconnected for instance 'rst_ps7_0_100M' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:856]
-WARNING: [Synth 8-7071] port 'interconnect_aresetn' of module 'pm_zynq_rst_ps7_0_100M_0' is unconnected for instance 'rst_ps7_0_100M' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:856]
-WARNING: [Synth 8-7023] instance 'rst_ps7_0_100M' of module 'pm_zynq_rst_ps7_0_100M_0' has 10 connections declared, but only 6 given [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:856]
-INFO: [Synth 8-6155] done synthesizing module 'pm_zynq' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:408]
+INFO: [Synth 8-6157] synthesizing module 'm03_couplers_imp_YXDMH6' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:408]
+INFO: [Synth 8-6155] done synthesizing module 'm03_couplers_imp_YXDMH6' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:408]
+INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_1AYRAXE' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1872]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq_auto_pc_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_auto_pc_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_auto_pc_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_auto_pc_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_1AYRAXE' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1872]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq_xbar_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_xbar_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_xbar_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_xbar_0_stub.v:5]
+WARNING: [Synth 8-7071] port 'm_axi_awprot' of module 'pm_zynq_xbar_0' is unconnected for instance 'xbar' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1831]
+WARNING: [Synth 8-7071] port 'm_axi_arprot' of module 'pm_zynq_xbar_0' is unconnected for instance 'xbar' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1831]
+WARNING: [Synth 8-7023] instance 'xbar' of module 'pm_zynq_xbar_0' has 40 connections declared, but only 38 given [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1831]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_axi_interconnect_0_0' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1071]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq_processing_system7_0_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_processing_system7_0_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_processing_system7_0_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_processing_system7_0_0_stub.v:5]
+WARNING: [Synth 8-7071] port 'SPI0_SCLK_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI0_MOSI_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI0_MISO_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI0_MISO_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI0_SS_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI0_SS1_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI0_SS2_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI0_SS_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI1_SCLK_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI1_MOSI_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI1_MISO_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI1_MISO_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI1_SS_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI1_SS1_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI1_SS2_O' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7071] port 'SPI1_SS_T' of module 'pm_zynq_processing_system7_0_0' is unconnected for instance 'processing_system7_0' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+WARNING: [Synth 8-7023] instance 'processing_system7_0' of module 'pm_zynq_processing_system7_0_0' has 93 connections declared, but only 77 given [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:984]
+INFO: [Synth 8-6157] synthesizing module 'pm_zynq_rst_ps7_0_100M_0' [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_rst_ps7_0_100M_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_rst_ps7_0_100M_0' (0#1) [C:/project/zynq/pm_test/pm_test.runs/synth_1/.Xil/Vivado-22792-DESKTOP-RIP2140/realtime/pm_zynq_rst_ps7_0_100M_0_stub.v:5]
+WARNING: [Synth 8-7071] port 'mb_reset' of module 'pm_zynq_rst_ps7_0_100M_0' is unconnected for instance 'rst_ps7_0_100M' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1062]
+WARNING: [Synth 8-7071] port 'bus_struct_reset' of module 'pm_zynq_rst_ps7_0_100M_0' is unconnected for instance 'rst_ps7_0_100M' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1062]
+WARNING: [Synth 8-7071] port 'peripheral_reset' of module 'pm_zynq_rst_ps7_0_100M_0' is unconnected for instance 'rst_ps7_0_100M' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1062]
+WARNING: [Synth 8-7071] port 'interconnect_aresetn' of module 'pm_zynq_rst_ps7_0_100M_0' is unconnected for instance 'rst_ps7_0_100M' [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1062]
+WARNING: [Synth 8-7023] instance 'rst_ps7_0_100M' of module 'pm_zynq_rst_ps7_0_100M_0' has 10 connections declared, but only 6 given [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:1062]
+INFO: [Synth 8-6155] done synthesizing module 'pm_zynq' (0#1) [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/synth/pm_zynq.v:540]
 INFO: [Synth 8-6155] done synthesizing module 'pm_zynq_wrapper' (0#1) [C:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/hdl/pm_zynq_wrapper.v:12]
 WARNING: [Synth 8-7129] Port M_ACLK in module s00_couplers_imp_1AYRAXE is either unconnected or has no load
 WARNING: [Synth 8-7129] Port M_ARESETN in module s00_couplers_imp_1AYRAXE is either unconnected or has no load
+WARNING: [Synth 8-7129] Port M_ACLK in module m03_couplers_imp_YXDMH6 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port M_ARESETN in module m03_couplers_imp_YXDMH6 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port S_ACLK in module m03_couplers_imp_YXDMH6 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port S_ARESETN in module m03_couplers_imp_YXDMH6 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port M_ACLK in module m02_couplers_imp_1XFZKUH is either unconnected or has no load
 WARNING: [Synth 8-7129] Port M_ARESETN in module m02_couplers_imp_1XFZKUH is either unconnected or has no load
 WARNING: [Synth 8-7129] Port S_ACLK in module m02_couplers_imp_1XFZKUH is either unconnected or has no load
@@ -93,21 +138,23 @@ WARNING: [Synth 8-7129] Port M01_ACLK in module pm_zynq_axi_interconnect_0_0 is 
 WARNING: [Synth 8-7129] Port M01_ARESETN in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port M02_ACLK in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port M02_ARESETN in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port M03_ACLK in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port M03_ARESETN in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port S00_ACLK in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port S00_ARESETN in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:04 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished RTL Elaboration : Time (s): cpu = 00:00:00 ; elapsed = 00:00:04 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:04 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:00 ; elapsed = 00:00:04 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:04 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:00 ; elapsed = 00:00:04 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 1293.805 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -126,21 +173,21 @@ Parsing XDC File [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm
 Finished Parsing XDC File [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_rst_ps7_0_100M_0/pm_zynq_rst_ps7_0_100M_0/pm_zynq_rst_ps7_0_100M_0_in_context.xdc] for cell 'pm_zynq_i/rst_ps7_0_100M'
 Parsing XDC File [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_2_0/pm_zynq_axi_gpio_2_0/pm_zynq_axi_gpio_2_0_in_context.xdc] for cell 'pm_zynq_i/axi_gpio_2'
 Finished Parsing XDC File [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_2_0/pm_zynq_axi_gpio_2_0/pm_zynq_axi_gpio_2_0_in_context.xdc] for cell 'pm_zynq_i/axi_gpio_2'
+Parsing XDC File [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_3_0/pm_zynq_axi_gpio_3_0/pm_zynq_axi_gpio_3_0_in_context.xdc] for cell 'pm_zynq_i/axi_gpio_3'
+Finished Parsing XDC File [c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_3_0/pm_zynq_axi_gpio_3_0/pm_zynq_axi_gpio_3_0_in_context.xdc] for cell 'pm_zynq_i/axi_gpio_3'
 Parsing XDC File [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_CS_tri_i[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:38]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_CS_tri_i[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:39]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[3]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:41]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[2]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:42]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[1]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:43]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:44]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[3]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:45]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[2]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:46]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[1]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:47]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:48]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_DEBUG_tri_O[1]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:51]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_DEBUG_tri_O[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:52]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_DEBUG_tri_O[1]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:54]
-WARNING: [Vivado 12-584] No ports matched 'GPIO_DEBUG_tri_O[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:55]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[3]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:53]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[2]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:54]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[1]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:55]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:56]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[3]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:57]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[2]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:58]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[1]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:59]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_OUT_tri_O[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:60]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_DEBUG_tri_O[1]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:63]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_DEBUG_tri_O[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:64]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_DEBUG_tri_O[1]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:66]
+WARNING: [Vivado 12-584] No ports matched 'GPIO_DEBUG_tri_O[0]'. [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc:67]
 Finished Parsing XDC File [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc]
 WARNING: [Project 1-498] One or more constraints failed evaluation while reading constraint file [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc] and the design contains unresolved black boxes. These constraints will be read post-synthesis (as long as their source constraint file is marked as used_in_implementation) and should be applied correctly then. You should review the constraints listed in the file [.Xil/pm_zynq_wrapper_propImpl.xdc] and check the run log file to verify that these constraints were correctly applied.
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/project/zynq/pm_test/pm_test.srcs/constrs_1/new/pm_test.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/pm_zynq_wrapper_propImpl.xdc].
@@ -149,22 +196,22 @@ Parsing XDC File [C:/project/zynq/pm_test/pm_test.runs/synth_1/dont_touch.xdc]
 Finished Parsing XDC File [C:/project/zynq/pm_test/pm_test.runs/synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1293.805 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1293.805 ; gain = 0.000
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:04 ; elapsed = 00:00:08 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished Constraint Validation : Time (s): cpu = 00:00:01 ; elapsed = 00:00:08 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:04 ; elapsed = 00:00:08 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:01 ; elapsed = 00:00:08 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -438,11 +485,12 @@ Applied set_property KEEP_HIERARCHY = SOFT for pm_zynq_i/axi_gpio_1. (constraint
 Applied set_property KEEP_HIERARCHY = SOFT for pm_zynq_i/processing_system7_0. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for pm_zynq_i/rst_ps7_0_100M. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for pm_zynq_i/axi_gpio_2. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for pm_zynq_i/axi_gpio_3. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:04 ; elapsed = 00:00:08 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:01 ; elapsed = 00:00:08 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:08 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:01 ; elapsed = 00:00:08 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -470,28 +518,30 @@ WARNING: [Synth 8-7129] Port M01_ACLK in module pm_zynq_axi_interconnect_0_0 is 
 WARNING: [Synth 8-7129] Port M01_ARESETN in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port M02_ACLK in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port M02_ARESETN in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port M03_ACLK in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port M03_ARESETN in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port S00_ACLK in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 WARNING: [Synth 8-7129] Port S00_ARESETN in module pm_zynq_axi_interconnect_0_0 is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:05 ; elapsed = 00:00:09 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:02 ; elapsed = 00:00:09 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:12 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:02 ; elapsed = 00:00:12 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:12 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished Timing Optimization : Time (s): cpu = 00:00:02 ; elapsed = 00:00:12 . Memory (MB): peak = 1293.805 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:08 ; elapsed = 00:00:12 . Memory (MB): peak = 1293.152 ; gain = 0.000
+Finished Technology Mapping : Time (s): cpu = 00:00:02 ; elapsed = 00:00:12 . Memory (MB): peak = 1295.070 ; gain = 1.266
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -509,37 +559,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1294.086 ; gain = 0.934
+Finished IO Insertion : Time (s): cpu = 00:00:03 ; elapsed = 00:00:14 . Memory (MB): peak = 1301.789 ; gain = 7.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1294.086 ; gain = 0.934
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:03 ; elapsed = 00:00:14 . Memory (MB): peak = 1301.789 ; gain = 7.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1294.086 ; gain = 0.934
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:03 ; elapsed = 00:00:14 . Memory (MB): peak = 1301.789 ; gain = 7.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1294.086 ; gain = 0.934
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:03 ; elapsed = 00:00:14 . Memory (MB): peak = 1301.789 ; gain = 7.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1294.086 ; gain = 0.934
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:14 . Memory (MB): peak = 1301.789 ; gain = 7.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1294.086 ; gain = 0.934
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:03 ; elapsed = 00:00:14 . Memory (MB): peak = 1301.789 ; gain = 7.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -554,8 +604,9 @@ Report BlackBoxes:
 |3     |pm_zynq_axi_gpio_0_0           |         1|
 |4     |pm_zynq_axi_gpio_1_0           |         1|
 |5     |pm_zynq_axi_gpio_2_0           |         1|
-|6     |pm_zynq_processing_system7_0_0 |         1|
-|7     |pm_zynq_rst_ps7_0_100M_0       |         1|
+|6     |pm_zynq_axi_gpio_3_0           |         1|
+|7     |pm_zynq_processing_system7_0_0 |         1|
+|8     |pm_zynq_rst_ps7_0_100M_0       |         1|
 +------+-------------------------------+----------+
 
 Report Cell Usage: 
@@ -566,31 +617,32 @@ Report Cell Usage:
 |2     |pm_zynq_axi_gpio_0           |     1|
 |3     |pm_zynq_axi_gpio_1           |     1|
 |4     |pm_zynq_axi_gpio_2           |     1|
-|5     |pm_zynq_processing_system7_0 |     1|
-|6     |pm_zynq_rst_ps7_0_100M       |     1|
-|7     |pm_zynq_xbar                 |     1|
-|8     |IBUF                         |     6|
-|9     |OBUF                         |    15|
+|5     |pm_zynq_axi_gpio_3           |     1|
+|6     |pm_zynq_processing_system7_0 |     1|
+|7     |pm_zynq_rst_ps7_0_100M       |     1|
+|8     |pm_zynq_xbar                 |     1|
+|9     |IBUF                         |     7|
+|10    |OBUF                         |    17|
 +------+-----------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1294.086 ; gain = 0.934
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:03 ; elapsed = 00:00:14 . Memory (MB): peak = 1301.789 ; gain = 7.984
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 9 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:08 ; elapsed = 00:00:13 . Memory (MB): peak = 1294.086 ; gain = 0.934
-Synthesis Optimization Complete : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1294.086 ; gain = 0.934
+Synthesis finished with 0 errors, 0 critical warnings and 11 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:02 ; elapsed = 00:00:13 . Memory (MB): peak = 1301.789 ; gain = 7.984
+Synthesis Optimization Complete : Time (s): cpu = 00:00:03 ; elapsed = 00:00:14 . Memory (MB): peak = 1301.789 ; gain = 7.984
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1306.137 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1313.895 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1312.773 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1324.887 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete, checksum: a7f910c1
+Synth Design complete, checksum: 3436a5b
 INFO: [Common 17-83] Releasing license: Synthesis
-50 Infos, 62 Warnings, 0 Critical Warnings and 0 Errors encountered.
+54 Infos, 77 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:12 ; elapsed = 00:00:17 . Memory (MB): peak = 1312.773 ; gain = 19.621
+synth_design: Time (s): cpu = 00:00:04 ; elapsed = 00:00:17 . Memory (MB): peak = 1324.887 ; gain = 31.082
 INFO: [Common 17-1381] The checkpoint 'C:/project/zynq/pm_test/pm_test.runs/synth_1/pm_zynq_wrapper.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file pm_zynq_wrapper_utilization_synth.rpt -pb pm_zynq_wrapper_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Mon May 20 21:42:36 2024...
+INFO: [Common 17-206] Exiting Vivado at Tue May 28 21:44:52 2024...

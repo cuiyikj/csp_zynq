@@ -44,11 +44,18 @@
  *   uartlite    Configurable only in HW design
  *   ps7_uart    115200 (configured by bootrom/bsp)
  */
+#define ENABLE_NET   0
 
 #include <stdio.h>
+#include "xparameters.h"
+
+
 #include "platform.h"
 #include "xil_printf.h"
+
+
 #include "gpio.h"
+
 #include "led.h"
 #include "comlib.h"
 #include "sleep.h"
@@ -58,12 +65,23 @@
 #include "xscugic.h"
 #include "adc_queue.h"
 
+
+
+extern uint8_t adc_buf_index_current;
+
+
+uint8_t int_flag = 0;
 XScuGic g_intc;
+/* defined by each RAW mode application */
+
+
+
+
 
 uint32_t loop_index = 0;
 
 
-//int32_t ecg_adc_data[12] = {0};
+
 //int32_t lead_I = 0;
 //int32_t lead_II = 0;
 //int32_t lead_III = 0;
@@ -82,6 +100,13 @@ uint32_t loop_index = 0;
 // Leads V1, V2, V3: (Posterior Anterior)
 // Leads V4, V5, V6:(Right Left, or lateral)
 
+
+
+extern uint8_t adc_ready;
+
+
+
+
 extern uint8_t reg_ini_normal[25];
 uint8_t read_spi = 0;
 uint8_t ret = 0;
@@ -96,134 +121,90 @@ int32_t adc_ecg_detail[32];
 
 uint8_t uart_index = 0;
 
+uint8_t read_adc_once;
+
 int main()
 {
+    //int status=XST_SUCCESS;
+    //int Index;
+
+
 
     init_platform(&g_intc);
+
+    //Xil_SetTlbAttributes(SHARE_BASE, 0x14de2);
+    //Xil_SetTlbAttributes(CPU1_COPY_ADDR, 0x14de2);
     print("\r\n\r\n");
     //start_cpu1();
     print("***** CPS tester start ******\r\n");
 
     ps_uart_init();
     ps_intrrupt_init(&g_intc);
+	printf("uart init\r\n");
 
     main_led_gpio_init();
+	printf("led init\r\n");
+
     main_gpio_init();
+	printf("gpio init\r\n");
     gpio_intrrupt_init(&g_intc);
+	printf("gpio interrupt init\r\n");
+
     spi_ps_init();
-//	while(1)
-//	{
-//		DEBUG_LOW();
-//		DEBUG_HIGH();
-//
-//		RESET_LOW();
-//		RESET_HIGH();
-//
-//		SPI_CS_LOW();
-//		SPI_CS_HIGH();
-//	}
+	printf("spi init\r\n");
+
+
+    //platform_enable_interrupts();
+	//printf("enable interrupt\r\n");
+
 
     ADS_reset();
     ADS_Init(reg_ini_normal);
+
+//    while(1)
+//    {
+//    	  ADS_getDeviceID();
+//        usleep(1000);
+//    }
+
 	ADS_START();
 	ADS_RDATAC();
+	printf("ADS 1298 init\r\n");
+
+	printf("start loop\r\n");
+	read_adc_once = 1;
 	while(1)
 	{
-		process_uart_cmd();
-//		DEBUG_LOW();
-//		DEBUG_HIGH();
-
-		//printf("loop \n\r");
-		if (!cb_adc_empty())
+		if (READ_SPI_READY() == 0)
 		{
-
-			//cb_adc_get(&read_adc_data);
-			//adc_ecg_detail[uart_index%8] = read_adc_data.adc_ecg[1];
-
-			//printf("cb_adc %d \n\r", uart_index%8);
-
-			//if ((uart_index%8) == 0)
+			//printf("spi ready 0\r\n");
+			if (read_adc_once == 1)
 			{
-//				for (int i = 0; i< 8; i++)
-//				{
-//					read_adc_data.adc_ecg[8+i] = adc_ecg_detail[i];
-//				}
-				//printf("cb_adc %d \n\r", uart_index%8);
-				//set_gpio(3,1);
-				//ps_uart_sent_adc((uint8_t*)&read_adc_data, 4);
-				//set_gpio(3,0);
-
-
-				//printf("send %f\r\n", read_adc_data.adc_ecg[0]);
-				loop_index++;
+				ADS_RDATA();
+				read_adc_once = 0;
 			}
-			uart_index++;
+
+
 		}
-//    	if (loop_index%1000 == 0)
-//    	{
-//    		flash_led();
-//    	}
+		else
+		{
+			//printf("spi ready 1\r\n");
+			read_adc_once = 1;
+		}
+//        if (adc_ready == 1)
+//        {
+//        	//if (tcp_adc_transfer)
+//        	{
+//        		//tcp_transfer_adc_data();
+//        	}
+//
+//        	printf("adc %d ready %d\r\n",  adc_buf_index_current, sizeof(ADC_BUF));
+//        	adc_ready = 0;
+//        }
+		process_uart_cmd();
     	loop_index++;
 
     }
-
-
-	HAL_Delay(100);
-//    while(1)
-//    {
-//    	ADS_START();
-//    	usleep(2);
-//    	ADS_RDATA();
-//		lead_I = adc_data[1];
-//		lead_II = adc_data[2];
-//		lead_III = ecg_adc_data[1] - ecg_adc_data[0];
-		// aVL = (I + III)/2
-		// aVR = (- I -II)/2
-		// aVF= ( II + III)/2
-//		ecg_adc_data[0] = lead_I;
-//		ecg_adc_data[1] = lead_II;
-//		ecg_adc_data[2] = lead_III;
-//		ecg_adc_data[3] = (lead_I + lead_III)/2;
-//		ecg_adc_data[4] = (- lead_I -lead_II)/2;
-//		ecg_adc_data[5] = ( lead_II + lead_III)/2;
-//		ecg_adc_data[6] = ecg_adc_data[7] ;
-//		ecg_adc_data[7] = ecg_adc_data[3] ;
-//		ecg_adc_data[8] = ecg_adc_data[4] ;
-//		ecg_adc_data[9] = ecg_adc_data[5] ;
-//		ecg_adc_data[10] = ecg_adc_data[6] ;
-//		ecg_adc_data[11] = ecg_adc_data[0] ;
-//
-//
-//
-//    	ps_uart_sent_adc((uint8_t*)&adc_data, 32);
-//		process_uart_cmd();
-//    	usleep(610);
-//			printf("*** read adc\n\r");
-//			for( int i = 0; i < 8; i++)
-//			{
-//				double temp = 0;
-//				if (adc_data[i] <= 0x7fffff)
-//				{
-//					temp = (double)adc_data[i]/(double)0x7fffff;
-//				}
-//				else
-//				{
-//					temp = (double)adc_data[i]/(double)0x7fffff;
-//				}
-//
-//				printf("new acd%d = %x: %f\r\n", i+1, (uint)adc_data[i], temp);
-//			}
-//			printf("\r\n");
-
-    	//    	printf("*****read adc\n\r");
-    	//    	for( int i = 0; i < 8; i++)
-    	//    	{
-    	//        	printf("acd%d= %x \r\n", i,adc_data[i]);
-    	//    	}
-    	//    	printf("\r\n");
-    	//    	sleep(1);
-//    }
-
 
     cleanup_platform();
     return 0;

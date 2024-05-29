@@ -6,6 +6,7 @@
 #include "adc_queue.h"
 #include "sleep.h"
 #include "ps_uart.h"
+
 /*------------------------------- VARIABLES -----------------------------*/
 
 extern ECG_ADC adc_data;
@@ -106,9 +107,14 @@ uint8_t reg_ini_calibrate[25]=
     0xfa,  //23
     0xdc,  //24
 };
-int32_t channelData [ECG_CHANNEL_SIZE];    // array used when reading channel data board 1+2
-int32_t send_channelData [ECG_CHANNEL_SIZE];    // array used when reading channel data board 1+2
+int32_t channelData [ECG_CHANNEL_SIZE];
+
 uint32_t pila = 0;
+
+ADC_BUF adc_buf_0;
+ADC_BUF adc_buf_1;
+ADC_BUF adc_buf_2;
+ADC_BUF adc_buf_3;
 
 /*------------------------------- FUNCTIIONS -----------------------------*/
 void delay_ms(uint32_t delay)
@@ -123,9 +129,9 @@ void ADS_test()
 
 void ADS_reset()
 {
-    RESET_LOW();
+    RESET_SPI_0_LOW();
     delay_ms(10);
-    RESET_HIGH();
+    RESET_SPI_0_HIGH();
 
     delay_ms(1);
     ADS_RESET();
@@ -383,46 +389,46 @@ void ADS_Init(uint8_t* reg_ini)
 
 void ADS_SDATAC()
 {
-    SPI_CS_LOW();
+    SPI_0_CS_LOW();
     transferSPI(_SDATAC);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 }
 
 //start data conversion
 void ADS_START()
 {
-    SPI_CS_LOW();
+	SPI_0_CS_LOW();
     transferSPI(_START);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 }
 
 //stop data conversion
 void ADS_STOP()
 {
-    SPI_CS_LOW();
+	SPI_0_CS_LOW();
     transferSPI(_STOP);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 }
 
 void ADS_RESET()
 {
-    SPI_CS_LOW();
+	SPI_0_CS_LOW();
     transferSPI(_RESET);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 }
 
 void ADS_RDATAC()
 {
-    SPI_CS_LOW();
+	SPI_0_CS_LOW();
     transferSPI(_RDATAC);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 }
 
 void ADS_WAKEUP()
 {
-    SPI_CS_LOW();
+	SPI_0_CS_LOW();
     transferSPI( _WAKEUP);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 }
 
 // Register Read/Write Commands
@@ -440,14 +446,14 @@ uint8_t ADS_RREG(uint8_t _address)
     uint8_t opcode1 = _address + 0x20;
     //  RREG expects 001rrrrr where rrrrr = _address
 
-    SPI_CS_LOW();
+    SPI_0_CS_LOW();
     transferSPI( opcode1);
     usleep(2);
     transferSPI( 0);
     usleep(2);
     regData[_address] = transferSPI(0);
     usleep(2);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 
     return regData[_address];
 }
@@ -459,7 +465,7 @@ void ADS_RREGS(uint8_t _address, uint8_t _numRegistersMinusOne)
     uint8_t opcode1 = _address + 0x20;
 
     //  RREG expects 001rrrrr where rrrrr = _address
-    SPI_CS_LOW();
+    SPI_0_CS_LOW();
     usleep(1);
     transferSPI( opcode1);
     usleep(2);
@@ -469,7 +475,7 @@ void ADS_RREGS(uint8_t _address, uint8_t _numRegistersMinusOne)
         regData[_address + i] = transferSPI( 0x00);
         usleep(2);
     }
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 
 }
 
@@ -479,7 +485,7 @@ void ADS_WREG(uint8_t _address, uint8_t _value)
     uint8_t opcode1 = _address + 0x40;
 
     //  WREG expects 010rrrrr where rrrrr = _address
-    SPI_CS_LOW();
+    SPI_0_CS_LOW();
     usleep(1);
     transferSPI( opcode1);
     usleep(2);
@@ -487,7 +493,7 @@ void ADS_WREG(uint8_t _address, uint8_t _value)
     usleep(2);
     transferSPI( _value);
     usleep(2);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
     regData[_address] = _value;
 }
 
@@ -498,7 +504,7 @@ void ADS_WREGS(uint8_t _address, uint8_t _numRegistersMinusOne, uint8_t *reg_ini
     uint8_t opcode1 = _address + 0x40;
 
     //  WREG expects 010rrrrr where rrrrr = _address
-    SPI_CS_LOW();
+    SPI_0_CS_LOW();
     usleep(5);
     transferSPI( opcode1);
     usleep(5);
@@ -511,7 +517,7 @@ void ADS_WREGS(uint8_t _address, uint8_t _numRegistersMinusOne, uint8_t *reg_ini
         usleep(5);
     }
     usleep(5);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 }
 
 void ADS_updateChannelData()
@@ -525,7 +531,7 @@ void ADS_updateChannelData()
     {
         channelData[i] = 0;
     }
-    SPI_CS_LOW();
+    SPI_0_CS_LOW();
     usleep(1);
     // READ CHANNEL DATA FROM FIRST ADS IN DAISY LINE
     //  read 3 byte status register from ADS 1 (1100+LOFF_STATP+LOFF_STATN+GPIO[7:4])
@@ -545,8 +551,14 @@ void ADS_updateChannelData()
         }
     }
     usleep(1);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
 }
+
+uint16_t adc_loop_index = 0;
+
+uint8_t adc_ready = 0;
+uint16_t adc_buf_index = 0;
+uint16_t adc_buf_index_current = 0;
 
 //  use in Stop Read Continuous mode when DRDY goes low
 void ADS_RDATA()
@@ -564,7 +576,7 @@ void ADS_RDATA()
     {
         channelData[i] = 0;
     }
-    SPI_CS_LOW();
+    SPI_0_CS_LOW();
     usleep(1);
     transferSPI( _RDATA);
     usleep(1);
@@ -586,7 +598,7 @@ void ADS_RDATA()
         channelData[i] = (inByte1 << 16) | (inByte2 << 8) | inByte3;
     }
     usleep(1);
-    SPI_CS_HIGH();
+    SPI_0_CS_HIGH();
     // convert 3 byte 2's compliment to 4 byte 2's compliment
     for( i = 0; i < ECG_CHANNEL_SIZE; i++)
     {
@@ -598,35 +610,86 @@ void ADS_RDATA()
         {
             channelData[i] &= 0x00FFFFFF;
         }
-        adc_data.adc_ecg[i] = channelData[i];
+        //adc_data.adc_ecg[i] = channelData[i];
         //channelData[i] = channelData[i] << 8;
         //printf("acd%d= %x \r\n", i,channelData[i]);
     }
-    send_channelData[0] = channelData[1];
-    send_channelData[1] = channelData[2];
-    send_channelData[2] = channelData[7];
-    send_channelData[3] = channelData[3];
-    send_channelData[4] = channelData[4];
-    send_channelData[5] = channelData[5];
-    send_channelData[6] = channelData[6];
-    send_channelData[7] = channelData[0];
+    switch (adc_buf_index)
+   	{
+    	case 0:
+    		adc_buf_0.channel_data_32[adc_loop_index * 8]     = channelData[1];
+			adc_buf_0.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
+			adc_buf_0.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
+			adc_buf_0.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
+			adc_buf_0.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
+			adc_buf_0.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
+			adc_buf_0.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
+			adc_buf_0.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
+    	break;
+    	case 1:
+    		adc_buf_1.channel_data_32[adc_loop_index * 8]     = channelData[1];
+			adc_buf_1.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
+			adc_buf_1.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
+			adc_buf_1.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
+			adc_buf_1.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
+			adc_buf_1.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
+			adc_buf_1.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
+			adc_buf_1.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
+    	break;
+    	case 2:
+    		adc_buf_2.channel_data_32[adc_loop_index * 8]     = channelData[1];
+			adc_buf_2.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
+			adc_buf_2.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
+			adc_buf_2.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
+			adc_buf_2.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
+			adc_buf_2.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
+			adc_buf_2.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
+			adc_buf_2.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
+    	break;
+    	case 3:
+    		adc_buf_3.channel_data_32[adc_loop_index * 8]     = channelData[1];
+			adc_buf_3.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
+			adc_buf_3.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
+			adc_buf_3.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
+			adc_buf_3.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
+			adc_buf_3.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
+			adc_buf_3.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
+			adc_buf_3.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
+    	break;
+   	}
 
+
+    adc_loop_index++;
+
+    if (adc_loop_index >= 320)
+    {
+    	adc_ready = 1;
+    	adc_buf_index_current = adc_buf_index;
+       	//printf("adc_buf_index 0=  %d \r\n", adc_buf_index);
+       	//printf("adc_buf_index_current 0 = %d \r\n", adc_buf_index_current);
+       	adc_loop_index = 0;
+    	adc_buf_index = (adc_buf_index + 1)%4 ;
+       	//printf("adc_buf_index new=  %d \r\n", adc_buf_index);
+    	printf("adc_ready isr %d\r\n",  adc_buf_index);
+    }
+
+//    tcp_transfer_adc_data((uint8_t *)send_channelData, 32);
     switch (adc_sps)
 	{
 	case SPS_1K:
-		ps_uart_sent_adc((uint8_t*)&send_channelData[0], 32);
+		ps_uart_sent_adc((uint8_t*)&channelData[0], 32);
 	break;
 	case SPS_2K:
-		ps_uart_sent_adc((uint8_t*)&send_channelData[0], 16);
+		ps_uart_sent_adc((uint8_t*)&channelData[0], 16);
 	break;
 
 	case SPS_4K:
-		ps_uart_sent_adc((uint8_t*)&send_channelData[0], 8);
+		ps_uart_sent_adc((uint8_t*)&channelData[0], 8);
 	break;
 
 	case SPS_8K:
 		//send_uart_0((uint8_t*)&send_channelData[0], 4);
-		ps_uart_sent_adc((uint8_t*)&send_channelData[0], 4);
+		ps_uart_sent_adc((uint8_t*)&channelData[0], 4);
 	break;
 
 	}
@@ -639,104 +702,7 @@ void ADS_RDATA()
 // String-Byte converters for RREG and WREG
 void ADS_printRegisterName(uint8_t _address)
 {
-    if(_address == ID)
-    {
-        printf("ID ");
-        //the "F" macro loads the string directly from Flash memory, thereby saving RAM
-    }
-    else if(_address == CONFIG1)
-    {
-        printf("CONFIG1 ");
-    }
-    else if(_address == CONFIG2)
-    {
-        printf("CONFIG2 ");
-    }
-    else if(_address == CONFIG3)
-    {
-        printf("CONFIG3 ");
-    }
-    else if(_address == LOFF)
-    {
-        printf("LOFF ");
-    }
-    else if(_address == CH1SET)
-    {
-        printf("CH1SET ");
-    }
-    else if(_address == CH2SET)
-    {
-        printf("CH2SET ");
-    }
-    else if(_address == CH3SET)
-    {
-        printf("CH3SET ");
-    }
-    else if(_address == CH4SET)
-    {
-        printf("CH4SET ");
-    }
-    else if(_address == CH5SET)
-    {
-        printf("CH5SET ");
-    }
-    else if(_address == CH6SET)
-    {
-        printf("CH6SET ");
-    }
-    else if(_address == CH7SET)
-    {
-        printf("CH7SET ");
-    }
-    else if(_address == CH8SET)
-    {
-        printf("CH8SET ");
-    }
-    else if(_address == BIAS_SENSP)
-    {
-        printf("BIAS_SENSP ");
-    }
-    else if(_address == BIAS_SENSN)
-    {
-        printf("BIAS_SENSN ");
-    }
-    else if(_address == LOFF_SENSP)
-    {
-        printf("LOFF_SENSP ");
-    }
-    else if(_address == LOFF_SENSN)
-    {
-        printf("LOFF_SENSN ");
-    }
-    else if(_address == LOFF_FLIP)
-    {
-        printf("LOFF_FLIP ");
-    }
-    else if(_address == LOFF_STATP)
-    {
-        printf("LOFF_STATP ");
-    }
-    else if(_address == LOFF_STATN)
-    {
-        printf("LOFF_STATN ");
-    }
-    else if(_address == GPIO)
-    {
-        printf("GPIO ");
-    }
-    else if(_address == MISC1)
-    {
-        printf("MISC1 ");
-    }
-    else if(_address == MISC2)
-    {
-        printf("MISC2 ");
-    }
-    else if(_address == CONFIG4)
-    {
-        printf("CONFIG4 ");
-    }
-    printf("\t");
+
 }
 
 void ADS_SendData()

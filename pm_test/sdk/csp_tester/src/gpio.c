@@ -14,9 +14,9 @@
 #include "gpio.h"
 #include "ads1298.h"
 
-XGpio gpio_1;
-XGpio gpio_2;
-
+XGpio gpio_cs_1;
+XGpio gpio_out_debug_2;
+XGpio gpio_input_3;
 
 
 
@@ -24,9 +24,11 @@ uint32_t input_pin = 0;
 uint32_t output_pin =0xffffffff;
 
 //output pin XPAR_GPIO_1_DEVICE_ID CH1
-//0 => Y17: spi cs
+//0 => Y17: spi0 cs
+//output pin XPAR_GPIO_1_DEVICE_ID CH2
+//0 => F16: spi1 cs
 
-//input pin XPAR_GPIO_1_DEVICE_ID CH2
+//input pin XPAR_GPIO_1_DEVICE_ID CH3
 //0 => B20:
 //1 => B19:
 //2 => A20:
@@ -51,29 +53,38 @@ uint32_t output_pin =0xffffffff;
 void main_gpio_init(void)
 {
 	//main gpio int
-	int xStatus = XGpio_Initialize(&gpio_1, XPAR_GPIO_1_DEVICE_ID);
+	int xStatus = XGpio_Initialize(&gpio_cs_1, XPAR_GPIO_1_DEVICE_ID);
 	if (XST_SUCCESS != xStatus)
 	{
 		printf("Failed to initialize main GPIO");
 	}
-	//1 output
-	XGpio_SetDataDirection(&gpio_1, 1, 0x1);
-	XGpio_DiscreteWrite(&gpio_1, 1, 0x1);
-	//2 input
-	XGpio_SetDataDirection(&gpio_1, 2, 0);
+	//1 cs
+	XGpio_SetDataDirection(&gpio_cs_1, 1, 0x3);
+	XGpio_DiscreteWrite(&gpio_cs_1, 1, 0x3);
+	XGpio_SetDataDirection(&gpio_cs_1, 2, 0x3);
+	XGpio_DiscreteWrite(&gpio_cs_1, 2, 0x3);
 
-
-	xStatus = XGpio_Initialize(&gpio_2, XPAR_GPIO_2_DEVICE_ID);
+	//2 output and debug
+	xStatus = XGpio_Initialize(&gpio_out_debug_2, XPAR_GPIO_2_DEVICE_ID);
 	if (XST_SUCCESS != xStatus)
 	{
 		printf("Failed to initialize main GPIO");
 	}
-	//1 output
-	XGpio_SetDataDirection(&gpio_2, 1, 0xF);
-	XGpio_DiscreteWrite(&gpio_2, 1, 0xF);
-	//2 DEBUG
-	XGpio_SetDataDirection(&gpio_2, 2, 0xF);
-	XGpio_DiscreteWrite(&gpio_2, 2, 0xF);
+
+	XGpio_SetDataDirection(&gpio_out_debug_2, 1, 0xf);
+	XGpio_SetDataDirection(&gpio_out_debug_2, 2, 0xf);
+
+	XGpio_DiscreteWrite(&gpio_out_debug_2, 1, 0xf);
+	XGpio_DiscreteWrite(&gpio_out_debug_2, 2, 0xf);
+
+	//3 input
+	xStatus = XGpio_Initialize(&gpio_input_3, XPAR_GPIO_3_DEVICE_ID);
+	if (XST_SUCCESS != xStatus)
+	{
+		printf("Failed to initialize main GPIO");
+	}
+
+	XGpio_SetDataDirection(&gpio_input_3, 1, 0);
 
 }
 
@@ -86,15 +97,15 @@ void axi_gpio_handler(void *CallbackRef)
     XGpio_InterruptClear(GpioPtr, KEY_MASK);
 	//XGpio_InterruptEnable(GpioPtr, KEY_MASK);
 
-    //printf("gpio int\r\n");
+    printf("gpio interrupt\r\n");
 }
 
 int gpio_intrrupt_init(XScuGic *scugic_inst)
 {
-	XGpio_InterruptEnable(&gpio_1, KEY_MASK);
-	XGpio_InterruptGlobalEnable(&gpio_1);
+	XGpio_InterruptEnable(&gpio_input_3, KEY_MASK);
+	XGpio_InterruptGlobalEnable(&gpio_input_3);
 	XScuGic_SetPriorityTriggerType(scugic_inst, GPIO_INT_ID, 0xA0, 0x1);
-	XScuGic_Connect(scugic_inst, GPIO_INT_ID, axi_gpio_handler, &gpio_1);
+	XScuGic_Connect(scugic_inst, GPIO_INT_ID, axi_gpio_handler, &gpio_input_3);
 	XScuGic_Enable(scugic_inst, GPIO_INT_ID);
 	Xil_ExceptionInit();
 	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
@@ -128,8 +139,9 @@ uint8_t read_gpio(XGpio* gp, uint8_t ch, uint8_t pin)
 	uint32_t read = 0;
 
 	read = XGpio_DiscreteRead(gp, ch);
+	//printf("gpio read %x \r\n", read);
 
-	if (read & (pin<<1))
+	if (read & (1<<pin))
 	{
 		ret = 1;
 	}

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.1 (win64) Build 3526262 Mon Apr 18 15:48:16 MDT 2022
-| Date         : Mon May 20 21:56:05 2024
+| Date         : Tue May 28 21:46:16 2024
 | Host         : DESKTOP-RIP2140 running 64-bit major release  (build 9200)
 | Command      : report_methodology -file pm_zynq_wrapper_methodology_drc_routed.rpt -pb pm_zynq_wrapper_methodology_drc_routed.pb -rpx pm_zynq_wrapper_methodology_drc_routed.rpx
 | Design       : pm_zynq_wrapper
@@ -23,11 +23,11 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 15
+             Violations found: 16
 +-----------+----------+-------------------------------+------------+
 | Rule      | Severity | Description                   | Violations |
 +-----------+----------+-------------------------------+------------+
-| TIMING-18 | Warning  | Missing input or output delay | 15         |
+| TIMING-18 | Warning  | Missing input or output delay | 16         |
 +-----------+----------+-------------------------------+------------+
 
 2. REPORT DETAILS
@@ -74,35 +74,40 @@ Related violations: <none>
 
 TIMING-18#9 Warning
 Missing input or output delay  
-An output delay is missing on GPIO_CS_tri_o[0] relative to clock(s) clk_fpga_0
+An output delay is missing on GPIO_CS_1_tri_o[0] relative to clock(s) clk_fpga_0
 Related violations: <none>
 
 TIMING-18#10 Warning
 Missing input or output delay  
-An output delay is missing on GPIO_DEBUG_tri_o[0] relative to clock(s) clk_fpga_0
+An output delay is missing on GPIO_CS_2_tri_o[0] relative to clock(s) clk_fpga_0
 Related violations: <none>
 
 TIMING-18#11 Warning
 Missing input or output delay  
-An output delay is missing on GPIO_DEBUG_tri_o[1] relative to clock(s) clk_fpga_0
+An output delay is missing on GPIO_DEBUG_tri_o[0] relative to clock(s) clk_fpga_0
 Related violations: <none>
 
 TIMING-18#12 Warning
 Missing input or output delay  
-An output delay is missing on GPIO_OUT_tri_o[0] relative to clock(s) clk_fpga_0
+An output delay is missing on GPIO_DEBUG_tri_o[1] relative to clock(s) clk_fpga_0
 Related violations: <none>
 
 TIMING-18#13 Warning
 Missing input or output delay  
-An output delay is missing on GPIO_OUT_tri_o[1] relative to clock(s) clk_fpga_0
+An output delay is missing on GPIO_OUT_tri_o[0] relative to clock(s) clk_fpga_0
 Related violations: <none>
 
 TIMING-18#14 Warning
 Missing input or output delay  
-An output delay is missing on GPIO_OUT_tri_o[2] relative to clock(s) clk_fpga_0
+An output delay is missing on GPIO_OUT_tri_o[1] relative to clock(s) clk_fpga_0
 Related violations: <none>
 
 TIMING-18#15 Warning
+Missing input or output delay  
+An output delay is missing on GPIO_OUT_tri_o[2] relative to clock(s) clk_fpga_0
+Related violations: <none>
+
+TIMING-18#16 Warning
 Missing input or output delay  
 An output delay is missing on GPIO_OUT_tri_o[3] relative to clock(s) clk_fpga_0
 Related violations: <none>

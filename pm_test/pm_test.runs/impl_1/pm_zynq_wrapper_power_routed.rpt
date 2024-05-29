@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2022.1 (win64) Build 3526262 Mon Apr 18 15:48:16 MDT 2022
-| Date             : Mon May 20 21:56:05 2024
+| Date             : Tue May 28 21:46:17 2024
 | Host             : DESKTOP-RIP2140 running 64-bit major release  (build 9200)
 | Command          : report_power -file pm_zynq_wrapper_power_routed.rpt -pb pm_zynq_wrapper_power_summary_routed.pb -rpx pm_zynq_wrapper_power_routed.rpx
 | Design           : pm_zynq_wrapper
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.404        |
+| Total On-Chip Power (W)  | 1.402        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.268        |
+| Dynamic (W)              | 1.266        |
 | Device Static (W)        | 0.136        |
 | Effective TJA (C/W)      | 11.5         |
 | Max Ambient (C)          | 68.8         |
@@ -52,19 +52,19 @@ Table of Contents
 +-------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
 +-------------------------+-----------+----------+-----------+-----------------+
-| Clocks                  |     0.005 |        3 |       --- |             --- |
-| Slice Logic             |     0.001 |     2043 |       --- |             --- |
-|   LUT as Logic          |     0.001 |      627 |     53200 |            1.18 |
-|   Register              |    <0.001 |      901 |    106400 |            0.85 |
+| Clocks                  |     0.004 |        3 |       --- |             --- |
+| Slice Logic             |     0.001 |     2133 |       --- |             --- |
+|   LUT as Logic          |    <0.001 |      689 |     53200 |            1.30 |
+|   Register              |    <0.001 |      935 |    106400 |            0.88 |
 |   CARRY4                |    <0.001 |       18 |     13300 |            0.14 |
-|   F7/F8 Muxes           |    <0.001 |        2 |     53200 |           <0.01 |
 |   LUT as Shift Register |    <0.001 |       62 |     17400 |            0.36 |
-|   Others                |     0.000 |      216 |       --- |             --- |
-| Signals                 |     0.002 |     1475 |       --- |             --- |
-| I/O                     |     0.004 |       21 |       125 |           16.80 |
+|   F7/F8 Muxes           |    <0.001 |        2 |     53200 |           <0.01 |
+|   Others                |     0.000 |      222 |       --- |             --- |
+| Signals                 |     0.002 |     1542 |       --- |             --- |
+| I/O                     |     0.004 |       24 |       125 |           19.20 |
 | PS7                     |     1.255 |        1 |       --- |             --- |
 | Static Power            |     0.136 |          |           |                 |
-| Total                   |     1.404 |          |           |                 |
+| Total                   |     1.402 |          |           |                 |
 +-------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.021 |       0.008 |      0.013 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.020 |       0.007 |      0.013 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.014 |       0.000 |      0.014 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.002 |       0.001 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -150,10 +150,10 @@ Table of Contents
 +--------------------------+-----------+
 | Name                     | Power (W) |
 +--------------------------+-----------+
-| pm_zynq_wrapper          |     1.268 |
-|   pm_zynq_i              |     1.263 |
-|     axi_interconnect_0   |     0.006 |
-|       s00_couplers       |     0.005 |
+| pm_zynq_wrapper          |     1.266 |
+|   pm_zynq_i              |     1.262 |
+|     axi_interconnect_0   |     0.005 |
+|       s00_couplers       |     0.004 |
 |     processing_system7_0 |     1.256 |
 |       inst               |     1.256 |
 +--------------------------+-----------+

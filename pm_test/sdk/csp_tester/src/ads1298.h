@@ -63,6 +63,21 @@
 #define CONFIG1_CLK_DIS_OUT			0x20
 #define CONFIG1_DR_250SPS			0x06
 
+typedef union
+{
+	struct
+	{
+		uint8_t adc_head[4];
+		uint8_t adc_buf[320*4];
+	};
+	struct
+	{
+		uint32_t header_32[1];
+		int32_t channel_data_32 [80*4];
+	};
+
+}ADC_BUF;
+//1284
 
 typedef enum
 {

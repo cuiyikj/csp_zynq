@@ -35,6 +35,7 @@
 #include "xscugic.h"
 #include "platform_config.h"
 
+
 void init_platform(XScuGic *Intc);
 void cleanup_platform();
 

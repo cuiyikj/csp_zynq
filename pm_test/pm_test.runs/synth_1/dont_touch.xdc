@@ -27,6 +27,9 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_rst
 # IP: bd/pm_zynq/ip/pm_zynq_axi_gpio_2_0/pm_zynq_axi_gpio_2_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_axi_gpio_2_0 || ORIG_REF_NAME==pm_zynq_axi_gpio_2_0} -quiet] -quiet
 
+# IP: bd/pm_zynq/ip/pm_zynq_axi_gpio_3_0/pm_zynq_axi_gpio_3_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_axi_gpio_3_0 || ORIG_REF_NAME==pm_zynq_axi_gpio_3_0} -quiet] -quiet
+
 # IP: bd/pm_zynq/ip/pm_zynq_auto_pc_0/pm_zynq_auto_pc_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==pm_zynq_auto_pc_0 || ORIG_REF_NAME==pm_zynq_auto_pc_0} -quiet] -quiet
 

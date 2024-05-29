@@ -72,7 +72,7 @@ proc create_report { reportName command } {
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param checkpoint.writeSynthRtdsInDcp 1
 set_param chipscope.maxJobs 8
-set_param synth.incrementalSynthesisCache C:/Users/hm/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-20428-DESKTOP-RIP2140/incrSyn
+set_msg_config -id {Common 17-41} -limit 10000000
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
@@ -107,6 +107,9 @@ set_property used_in_implementation false [get_files -all c:/project/zynq/pm_tes
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_2_0/pm_zynq_axi_gpio_2_0_board.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_2_0/pm_zynq_axi_gpio_2_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_2_0/pm_zynq_axi_gpio_2_0.xdc]
+set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_3_0/pm_zynq_axi_gpio_3_0_board.xdc]
+set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_3_0/pm_zynq_axi_gpio_3_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_axi_gpio_3_0/pm_zynq_axi_gpio_3_0.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/ip/pm_zynq_auto_pc_0/pm_zynq_auto_pc_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/project/zynq/pm_test/pm_test.gen/sources_1/bd/pm_zynq/pm_zynq_ooc.xdc]
 

@@ -286,14 +286,14 @@ void ps_uart_sent_adc(uint8_t* data, uint16_t len)
 	uint16_t crc_seed = 0;
 	adc_buf[0] = 0x02;
 	adc_buf[1] = 0x5a;
-
-
+//
+//
 	memcpy(&adc_buf[4], data, len);
-
+//
 	crc_16 = crc16_compute(data, len, &crc_seed);
 	adc_buf[2] = crc_16 & 0xff;
 	adc_buf[3] = crc_16 >> 8;
-
+//
 	adc_seq++;
 	send_uart_0(adc_buf, len + 4);
 	//total send 32 +4

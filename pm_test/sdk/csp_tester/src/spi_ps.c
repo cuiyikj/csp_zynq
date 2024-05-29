@@ -7,7 +7,8 @@
 
 #include "spi_ps.h"
 
-XSpiPs SpiInstance;
+XSpiPs SpiInstance_0;
+XSpiPs SpiInstance_1;
 
 /* */
 uint8_t read_buf [1000] ;
@@ -26,20 +27,42 @@ int spi_ps_init(void)
 		return XST_FAILURE;
 	}
 	/*  */
-	Status = XSpiPs_CfgInitialize((&SpiInstance), SpiConfig, SpiConfig->BaseAddress);
+	Status = XSpiPs_CfgInitialize((&SpiInstance_0), SpiConfig, SpiConfig->BaseAddress);
 	if (Status != XST_SUCCESS) {
 		return XST_FAILURE;
 	}
 
 
 	//Status = XSpiPs_SetOptions(&SpiInstance, XSPIPS_MASTER_OPTION | XSPIPS_FORCE_SSELECT_OPTION |XSPIPS_CLK_PHASE_1_OPTION);
-	Status = XSpiPs_SetOptions(&SpiInstance, XSPIPS_MASTER_OPTION | XSPIPS_CLK_PHASE_1_OPTION);
+	Status = XSpiPs_SetOptions(&SpiInstance_0, XSPIPS_MASTER_OPTION | XSPIPS_CLK_PHASE_1_OPTION);
 
 
-	Status = XSpiPs_SetClkPrescaler(&SpiInstance, XSPIPS_CLK_PRESCALE_16);
+	Status = XSpiPs_SetClkPrescaler(&SpiInstance_0, XSPIPS_CLK_PRESCALE_16);
 
 
-	XSpiPs_SetSlaveSelect(&SpiInstance, 0x00);
+	XSpiPs_SetSlaveSelect(&SpiInstance_0, 0x00);
+
+
+
+	SpiConfig = XSpiPs_LookupConfig(1);
+	if (NULL == SpiConfig) {
+		return XST_FAILURE;
+	}
+	/*  */
+	Status = XSpiPs_CfgInitialize((&SpiInstance_1), SpiConfig, SpiConfig->BaseAddress);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+
+	//Status = XSpiPs_SetOptions(&SpiInstance, XSPIPS_MASTER_OPTION | XSPIPS_FORCE_SSELECT_OPTION |XSPIPS_CLK_PHASE_1_OPTION);
+	Status = XSpiPs_SetOptions(&SpiInstance_1, XSPIPS_MASTER_OPTION | XSPIPS_CLK_PHASE_1_OPTION);
+
+
+	Status = XSpiPs_SetClkPrescaler(&SpiInstance_1, XSPIPS_CLK_PRESCALE_8);
+
+
+	XSpiPs_SetSlaveSelect(&SpiInstance_1, 0x00);
 
 	return XST_SUCCESS;
 }
@@ -66,14 +89,14 @@ void spi_test(void)
 	{
 		buf[i] = i;
 	}
-	spi_ps_send(&SpiInstance, buf, 3);
+	spi_ps_send(&SpiInstance_0, buf, 3);
 }
 
 
 uint8_t transferSPI(uint8_t val)
 {
 	//set_gpio(0,0);
-	spi_ps_send(&SpiInstance, &val, 1);
+	spi_ps_send(&SpiInstance_0, &val, 1);
 	return read_buf[0];
 	//set_gpio(0,1);
 }
