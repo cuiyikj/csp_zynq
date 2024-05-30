@@ -24,4 +24,18 @@ uint8_t transferSPI(uint8_t val);
 
 
 
+
+void SPI_WriteByte(uint8_t TxData);
+
+uint8_t SPI_ReadByte(void);
+
+void SPI_CrisEnter(void);
+
+void SPI_CrisExit(void);
+
+void SPI_CS_Select(void);
+
+void SPI_CS_Deselect(void);
+
+
 #endif /* SRC_SPIPS_H_ */

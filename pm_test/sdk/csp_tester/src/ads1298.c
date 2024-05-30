@@ -3,13 +3,13 @@
 #include "ADS1298.h"
 #include "spi_ps.h"
 #include "gpio.h"
-#include "adc_queue.h"
+
 #include "sleep.h"
 #include "ps_uart.h"
 
 /*------------------------------- VARIABLES -----------------------------*/
 
-extern ECG_ADC adc_data;
+//extern ECG_ADC adc_data;
 
 uint8_t adc_sps = SPS_1K;
 
@@ -108,7 +108,7 @@ uint8_t reg_ini_calibrate[25]=
     0xdc,  //24
 };
 int32_t channelData [ECG_CHANNEL_SIZE];
-
+int32_t seq_channelData [ECG_CHANNEL_SIZE];
 uint32_t pila = 0;
 
 ADC_BUF adc_buf_0;
@@ -611,85 +611,95 @@ void ADS_RDATA()
             channelData[i] &= 0x00FFFFFF;
         }
         //adc_data.adc_ecg[i] = channelData[i];
-        //channelData[i] = channelData[i] << 8;
+        seq_channelData[i] = channelData[i];
         //printf("acd%d= %x \r\n", i,channelData[i]);
     }
-    switch (adc_buf_index)
-   	{
-    	case 0:
-    		adc_buf_0.channel_data_32[adc_loop_index * 8]     = channelData[1];
-			adc_buf_0.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
-			adc_buf_0.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
-			adc_buf_0.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
-			adc_buf_0.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
-			adc_buf_0.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
-			adc_buf_0.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
-			adc_buf_0.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
-    	break;
-    	case 1:
-    		adc_buf_1.channel_data_32[adc_loop_index * 8]     = channelData[1];
-			adc_buf_1.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
-			adc_buf_1.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
-			adc_buf_1.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
-			adc_buf_1.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
-			adc_buf_1.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
-			adc_buf_1.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
-			adc_buf_1.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
-    	break;
-    	case 2:
-    		adc_buf_2.channel_data_32[adc_loop_index * 8]     = channelData[1];
-			adc_buf_2.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
-			adc_buf_2.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
-			adc_buf_2.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
-			adc_buf_2.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
-			adc_buf_2.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
-			adc_buf_2.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
-			adc_buf_2.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
-    	break;
-    	case 3:
-    		adc_buf_3.channel_data_32[adc_loop_index * 8]     = channelData[1];
-			adc_buf_3.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
-			adc_buf_3.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
-			adc_buf_3.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
-			adc_buf_3.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
-			adc_buf_3.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
-			adc_buf_3.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
-			adc_buf_3.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
-    	break;
-   	}
+    seq_channelData[0] = channelData[1];
+    seq_channelData[1] = channelData[2];
+    seq_channelData[2] = channelData[7];
+    seq_channelData[3] = channelData[3];
+    seq_channelData[4] = channelData[4];
+    seq_channelData[5] = channelData[5];
+    seq_channelData[6] = channelData[6];
+    seq_channelData[7] = channelData[0];
+
+    // switch (adc_buf_index)
+   	// {
+    // 	case 0:
+    // 		adc_buf_0.channel_data_32[adc_loop_index * 8]     = channelData[1];
+	// 		adc_buf_0.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
+	// 		adc_buf_0.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
+	// 		adc_buf_0.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
+	// 		adc_buf_0.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
+	// 		adc_buf_0.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
+	// 		adc_buf_0.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
+	// 		adc_buf_0.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
+    // 	break;
+    // 	case 1:
+    // 		adc_buf_1.channel_data_32[adc_loop_index * 8]     = channelData[1];
+	// 		adc_buf_1.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
+	// 		adc_buf_1.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
+	// 		adc_buf_1.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
+	// 		adc_buf_1.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
+	// 		adc_buf_1.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
+	// 		adc_buf_1.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
+	// 		adc_buf_1.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
+    // 	break;
+    // 	case 2:
+    // 		adc_buf_2.channel_data_32[adc_loop_index * 8]     = channelData[1];
+	// 		adc_buf_2.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
+	// 		adc_buf_2.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
+	// 		adc_buf_2.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
+	// 		adc_buf_2.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
+	// 		adc_buf_2.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
+	// 		adc_buf_2.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
+	// 		adc_buf_2.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
+    // 	break;
+    // 	case 3:
+    // 		adc_buf_3.channel_data_32[adc_loop_index * 8]     = channelData[1];
+	// 		adc_buf_3.channel_data_32[adc_loop_index * 8 + 1] = channelData[2];
+	// 		adc_buf_3.channel_data_32[adc_loop_index * 8 + 2] = channelData[7];
+	// 		adc_buf_3.channel_data_32[adc_loop_index * 8 + 3] = channelData[3];
+	// 		adc_buf_3.channel_data_32[adc_loop_index * 8 + 4] = channelData[4];
+	// 		adc_buf_3.channel_data_32[adc_loop_index * 8 + 5] = channelData[5];
+	// 		adc_buf_3.channel_data_32[adc_loop_index * 8 + 6] = channelData[6];
+	// 		adc_buf_3.channel_data_32[adc_loop_index * 8 + 7] = channelData[0];
+    // 	break;
+   	// }
 
 
-    adc_loop_index++;
+    // adc_loop_index++;
 
-    if (adc_loop_index >= 320)
-    {
-    	adc_ready = 1;
-    	adc_buf_index_current = adc_buf_index;
-       	//printf("adc_buf_index 0=  %d \r\n", adc_buf_index);
-       	//printf("adc_buf_index_current 0 = %d \r\n", adc_buf_index_current);
-       	adc_loop_index = 0;
-    	adc_buf_index = (adc_buf_index + 1)%4 ;
-       	//printf("adc_buf_index new=  %d \r\n", adc_buf_index);
-    	printf("adc_ready isr %d\r\n",  adc_buf_index);
-    }
+    // if (adc_loop_index >= 320)
+    // {
+    // 	adc_ready = 1;
+    // 	adc_buf_index_current = adc_buf_index;
+    //    	//printf("adc_buf_index 0=  %d \r\n", adc_buf_index);
+    //    	//printf("adc_buf_index_current 0 = %d \r\n", adc_buf_index_current);
+    //    	adc_loop_index = 0;
+    // 	adc_buf_index = (adc_buf_index + 1)%4 ;
+    //    	//printf("adc_buf_index new=  %d \r\n", adc_buf_index);
+    // 	printf("adc_ready isr %d\r\n",  adc_buf_index);
+    // }
 
 //    tcp_transfer_adc_data((uint8_t *)send_channelData, 32);
+
     switch (adc_sps)
 	{
 	case SPS_1K:
-		ps_uart_sent_adc((uint8_t*)&channelData[0], 32);
+		ps_uart_sent_adc((uint8_t*)&seq_channelData[0], 32);
 	break;
 	case SPS_2K:
-		ps_uart_sent_adc((uint8_t*)&channelData[0], 16);
+		ps_uart_sent_adc((uint8_t*)&seq_channelData[0], 16);
 	break;
 
 	case SPS_4K:
-		ps_uart_sent_adc((uint8_t*)&channelData[0], 8);
+		ps_uart_sent_adc((uint8_t*)&seq_channelData[0], 8);
 	break;
 
 	case SPS_8K:
 		//send_uart_0((uint8_t*)&send_channelData[0], 4);
-		ps_uart_sent_adc((uint8_t*)&channelData[0], 4);
+		ps_uart_sent_adc((uint8_t*)&seq_channelData[0], 4);
 	break;
 
 	}

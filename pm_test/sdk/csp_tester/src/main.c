@@ -64,7 +64,7 @@
 #include "ps_uart.h"
 #include "xscugic.h"
 #include "adc_queue.h"
-
+#include ".\W5500\tcp.h"
 
 
 extern uint8_t adc_buf_index_current;
@@ -147,13 +147,22 @@ int main()
 
     main_gpio_init();
 	printf("gpio init\r\n");
-    gpio_intrrupt_init(&g_intc);
+    //gpio_intrrupt_init(&g_intc);
 	printf("gpio interrupt init\r\n");
 
     spi_ps_init();
 	printf("spi init\r\n");
 
+	printf("w5500 init\r\n");
+	w5500_init();
 
+
+    while(1)
+    {
+    	//ADS_getDeviceID();
+    	spi_test();
+        usleep(10);
+    }
     //platform_enable_interrupts();
 	//printf("enable interrupt\r\n");
 
@@ -161,11 +170,8 @@ int main()
     ADS_reset();
     ADS_Init(reg_ini_normal);
 
-//    while(1)
-//    {
-//    	  ADS_getDeviceID();
-//        usleep(1000);
-//    }
+
+
 
 	ADS_START();
 	ADS_RDATAC();
@@ -183,7 +189,6 @@ int main()
 				ADS_RDATA();
 				read_adc_once = 0;
 			}
-
 
 		}
 		else

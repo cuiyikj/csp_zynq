@@ -17,8 +17,8 @@ extern XGpio gpio_input_3;
 #define SPI_0_CS_LOW()			set_gpio(&gpio_cs_1, 1, 0, 0)
 #define SPI_0_CS_HIGH()			set_gpio(&gpio_cs_1, 1, 0, 1)
 
-#define SPI_2_CS_LOW()			set_gpio(&gpio_cs_1, 2, 0, 0)
-#define SPI_2_CS_HIGH()			set_gpio(&gpio_cs_1, 2, 0, 1)
+#define SPI_1_CS_LOW()			set_gpio(&gpio_cs_1, 2, 0, 0)
+#define SPI_1_CS_HIGH()			set_gpio(&gpio_cs_1, 2, 0, 1)
 
 //#define READ_SPI_DRDY()	    read_gpio(&gpio_1, 2, 3)
 
@@ -26,8 +26,8 @@ extern XGpio gpio_input_3;
 #define RESET_SPI_0_LOW()	    set_gpio(&gpio_input_3, 1, 0, 0)
 #define RESET_SPI_0_HIGH()		set_gpio(&gpio_input_3, 1, 0, 1)
 
-#define RESET_SPI_2_LOW()	    set_gpio(&gpio_input_3, 1, 1, 0)
-#define RESET_SPI_2_HIGH()		set_gpio(&gpio_input_3, 1, 1, 1)
+#define RESET_SPI_1_CS_LOW()	    set_gpio(&gpio_input_3, 1, 1, 0)
+#define RESET_SPI_2_CS_HIGH()		set_gpio(&gpio_input_3, 1, 1, 1)
 
 
 #define DEBUG_LOW()		    	set_gpio(&gpio_out_debug_2, 2, 0, 0)

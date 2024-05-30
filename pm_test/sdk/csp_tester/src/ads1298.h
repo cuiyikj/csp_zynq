@@ -87,6 +87,8 @@ typedef enum
     SPS_8K,             // 0x03
 } SPS_RATE;
 
+
+#define  ECG_CHANNEL_SIZE 8
 extern bool verbose;
 
 extern int32_t channelData [ECG_CHANNEL_SIZE];

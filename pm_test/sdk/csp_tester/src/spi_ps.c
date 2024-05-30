@@ -56,10 +56,10 @@ int spi_ps_init(void)
 
 
 	//Status = XSpiPs_SetOptions(&SpiInstance, XSPIPS_MASTER_OPTION | XSPIPS_FORCE_SSELECT_OPTION |XSPIPS_CLK_PHASE_1_OPTION);
-	Status = XSpiPs_SetOptions(&SpiInstance_1, XSPIPS_MASTER_OPTION | XSPIPS_CLK_PHASE_1_OPTION);
+	Status = XSpiPs_SetOptions(&SpiInstance_1, XSPIPS_MASTER_OPTION );
 
 
-	Status = XSpiPs_SetClkPrescaler(&SpiInstance_1, XSPIPS_CLK_PRESCALE_8);
+	Status = XSpiPs_SetClkPrescaler(&SpiInstance_1, XSPIPS_CLK_PRESCALE_16);
 
 
 	XSpiPs_SetSlaveSelect(&SpiInstance_1, 0x00);
@@ -73,6 +73,9 @@ void spi_ps_send(XSpiPs *SpiInstancePtr,u8 *SendBuffer, int ByteCount)
 	XSpiPs_PolledTransfer(SpiInstancePtr, SendBuffer, read_buf, ByteCount);
 	//printf("spi read %x %x %x \n\r", read_buf[0], read_buf[1], read_buf[2] );
 }
+
+
+
 
 /* -------------------SPI------------- */
 void spi_ps_read(XSpiPs *SpiInstancePtr,u8 *ReadBuffer,int ByteCount)
@@ -89,7 +92,9 @@ void spi_test(void)
 	{
 		buf[i] = i;
 	}
-	spi_ps_send(&SpiInstance_0, buf, 3);
+	SPI_1_CS_LOW();
+	spi_ps_send(&SpiInstance_1, buf, 2);
+	SPI_1_CS_HIGH();
 }
 
 
@@ -100,3 +105,63 @@ uint8_t transferSPI(uint8_t val)
 	return read_buf[0];
 	//set_gpio(0,1);
 }
+
+
+/**
+  * @brief
+  * @param  TxData
+  * @retval None
+  */
+void SPI_WriteByte(uint8_t TxData)
+{
+	XSpiPs_PolledTransfer(&SpiInstance_1, &TxData, read_buf, 1);
+}
+
+/**
+  * @brief
+  * @retval
+  */
+uint8_t SPI_ReadByte(void)
+{
+	uint8_t ret;
+	send_buf[0] = 0xFF;
+	XSpiPs_PolledTransfer(&SpiInstance_1, send_buf, &ret, 1);
+	return ret;
+}
+
+/**
+  * @brief
+  * @retval None
+  */
+void SPI_CrisEnter(void)
+{
+
+}
+
+/**
+  * @brief
+  * @retval None
+  */
+void SPI_CrisExit(void)
+{
+
+}
+
+/**
+  * @brief
+  * @retval None
+  */
+void SPI_CS_Select(void)
+{
+	SPI_1_CS_LOW();
+}
+
+/**
+  * @brief
+  * @retval None
+  */
+void SPI_CS_Deselect(void)
+{
+	SPI_1_CS_HIGH();
+}
+
