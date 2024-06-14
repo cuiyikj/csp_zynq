@@ -1,0 +1,27 @@
+WORKFLOW_OPERATION simulation,dialog;
+
+DEFINE_MEMORY_TYPE microblaze_dac_local_memory_lmb_bram_64K_6_MEM_DEVICE [0x00010000] 32;
+DEFINE_MEMORY_TYPE blk_mem_gen_0_8K_6_MEM_DEVICE [0x00002000] 32;
+DEFINE_MEMORY_TYPE blk_mem_gen_0_64K_7_MEM_DEVICE [0x00010000] 32;
+
+ADDRESS_MAP microblaze_dac MICROBLAZE-LE 100 microblaze_dac
+   ADDRESS_SPACE microblaze_dac_local_memory_lmb_bram_64K_6_ADDR_SPACE microblaze_dac_local_memory_lmb_bram_64K_6_MEM_DEVICE  [0x00000000:0x0000FFFF] microblaze_dac_local_memory/dlmb_bram_if_cntlr
+     BUS_BLOCK
+      microblaze_dac_local_memory_lmb_bram_64K_6_BUS_BLK [31:0] INPUT = "system_lmb_bram_1.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+   ADDRESS_SPACE blk_mem_gen_0_8K_6_ADDR_SPACE blk_mem_gen_0_8K_6_MEM_DEVICE  [0x40000000:0x40001FFF] axi_bram_ctrl_0
+     BUS_BLOCK
+      blk_mem_gen_0_8K_6_BUS_BLK [31:0] INPUT = "system_blk_mem_gen_0_0.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+END_ADDRESS_MAP;
+
+ADDRESS_MAP processing_system7_0 ARM 100 processing_system7_0
+   ADDRESS_SPACE blk_mem_gen_0_64K_7_ADDR_SPACE blk_mem_gen_0_64K_7_MEM_DEVICE  [0x40000000:0x4000FFFF] axi_bram_ctrl_0
+     BUS_BLOCK
+      blk_mem_gen_0_64K_7_BUS_BLK [31:0] INPUT = "system_blk_mem_gen_0_0.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+END_ADDRESS_MAP;
+

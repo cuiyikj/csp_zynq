@@ -1,0 +1,19 @@
+verilog xil_defaultlib --include "C:/Xilinx/Vivado/2022.1/data/xilinx_vip/include" --include "../../../../z2_dev.gen/sources_1/bd/system/ipshared/ec67/hdl" --include "../../../../z2_dev.gen/sources_1/bd/system/ipshared/5765/hdl" \
+"../../../bd/system/ip/system_processing_system7_0_0/sim/system_processing_system7_0_0.v" \
+"../../../bd/system/ip/system_xbar_6/sim/system_xbar_6.v" \
+"../../../bd/system/ip/system_blk_mem_gen_0_0/sim/system_blk_mem_gen_0_0.v" \
+"../../../bd/system/ip/system_xbar_3/sim/system_xbar_3.v" \
+"../../../bd/system/ip/system_xadc_wiz_0_0/system_xadc_wiz_0_0.v" \
+"../../../bd/system/ip/system_lmb_bram_1/sim/system_lmb_bram_1.v" \
+"../../../bd/system/ip/system_xbar_4/sim/system_xbar_4.v" \
+"../../../bd/system/ipshared/f3ac/src/glitch_filter.v" \
+"../../../bd/system/ipshared/f3ac/src/i2c_decoder.v" \
+"../../../bd/system/ip/system_i2c_decoder_0_1/sim/system_i2c_decoder_0_1.v" \
+"../../../bd/system/ip/system_auto_pc_0/sim/system_auto_pc_0.v" \
+"../../../bd/system/ip/system_auto_pc_1/sim/system_auto_pc_1.v" \
+"../../../bd/system/ip/system_s00_mmu_0/sim/system_s00_mmu_0.v" \
+"../../../bd/system/sim/system.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort
