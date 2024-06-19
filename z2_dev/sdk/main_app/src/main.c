@@ -167,9 +167,9 @@ int main()
     netmask.addr = 0;
 #else
     /* initialize IP addresses to be used */
-    IP4_ADDR(&ipaddr,  10, 10,   10, 111);
+    IP4_ADDR(&ipaddr,  17, 17,   17, 17);
     IP4_ADDR(&netmask, 255, 255, 255,  0);
-    IP4_ADDR(&gw,      10, 10,   10,  1);
+    IP4_ADDR(&gw,      17, 17,   17,  1);
 #endif
 
     print_app_header();
