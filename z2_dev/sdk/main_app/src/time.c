@@ -154,30 +154,30 @@ int epoctime_convert(uint32_t epoch, char* time_str)
 
 void send_uart_epoc_time(void)
 {
-	uint8_t temp_buf[HEAD_OFFSET + UART_EPOC_TIME_SIZE];
-
-
-	temp_buf[0] = 0xA5;
-	temp_buf[1] = 0x5A;
-	temp_buf[2] = CMD_EPOC_TIME;
-	temp_buf[3] = UART_EPOC_TIME_SIZE;
-	temp_buf[4] = 0;
-	temp_buf[5] = 0;
-	temp_buf[6] = 0;
-	temp_buf[7] = 0;
-
-
-	memcpy(&temp_buf[8], (uint8_t*)&epoch_time, UART_EPOC_TIME_SIZE);
-
-	uint16_t crc16 = crc16_compute((uint8_t *)&temp_buf[HEAD_OFFSET], UART_EPOC_TIME_SIZE, NULL);
-	//printf("epoch %x \n\r", epoch_time);
-	temp_buf[4] = crc16&0xff;
-	temp_buf[5] = (crc16>>8)&0xff;
-
-	crc16 = crc16_compute((uint8_t *)&temp_buf[0], 6, NULL);
-	temp_buf[6] = crc16&0xff;
-	temp_buf[7] = (crc16>>8)&0xff;
-
-	icd_send_data((uint8_t *)temp_buf, UART_EPOC_TIME_SIZE + HEAD_OFFSET);
+//	uint8_t temp_buf[HEAD_OFFSET + UART_EPOC_TIME_SIZE];
+//
+//
+//	temp_buf[0] = 0xA5;
+//	temp_buf[1] = 0x5A;
+//	temp_buf[2] = CMD_EPOC_TIME;
+//	temp_buf[3] = UART_EPOC_TIME_SIZE;
+//	temp_buf[4] = 0;
+//	temp_buf[5] = 0;
+//	temp_buf[6] = 0;
+//	temp_buf[7] = 0;
+//
+//
+//	memcpy(&temp_buf[8], (uint8_t*)&epoch_time, UART_EPOC_TIME_SIZE);
+//
+//	uint16_t crc16 = crc16_compute((uint8_t *)&temp_buf[HEAD_OFFSET], UART_EPOC_TIME_SIZE, NULL);
+//	//printf("epoch %x \n\r", epoch_time);
+//	temp_buf[4] = crc16&0xff;
+//	temp_buf[5] = (crc16>>8)&0xff;
+//
+//	crc16 = crc16_compute((uint8_t *)&temp_buf[0], 6, NULL);
+//	temp_buf[6] = crc16&0xff;
+//	temp_buf[7] = (crc16>>8)&0xff;
+//
+//	icd_send_data((uint8_t *)temp_buf, UART_EPOC_TIME_SIZE + HEAD_OFFSET);
 
 }

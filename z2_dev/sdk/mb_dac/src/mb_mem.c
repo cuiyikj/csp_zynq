@@ -26,8 +26,8 @@ uint8_t adc_mem_index = 0;
 
 void mb_mem_init(void)
 {
-	uint8_t* mb_adc_mem = (uint8_t*)MB_TO_ARM_ADDRESS;
-	memset(mb_adc_mem, 0, MB_ADC_DATA_SIZE);
+	uint8_t* mb_adc_mem = (uint8_t*)ARM_TO_MB_ADDRESS;
+	memset(mb_adc_mem, 0, MB_MEM_SIZE);
 }
 
 

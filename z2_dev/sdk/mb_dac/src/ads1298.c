@@ -139,6 +139,7 @@ void ADS_test()
 
 void ADS_reset()
 {
+	SPI_0_CS_HIGH();
 	RESET_ADS1298_LOW();
     //RESET_SPI_0_LOW();
     delay_ms(10);

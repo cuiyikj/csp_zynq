@@ -166,24 +166,24 @@ void soft_intr_handler(void *CallbackRef)
     uint32_t dac_index = 0;
 
     read_ddr(header, 16);
-	switch (header[1])
-	{
-		case CMD_DAC_DONE:
-		{
-			printf("CMD_DAC_DONE \r\n");
-		    start_new_ecg = 1;
-			dac_update_flag = 2;
-		}
-		break;
-		case CMD_DAC_UPDATE:
-		{
-        	memcpy(&dac_index, &header[8],  4);
-        	update_dac_index = dac_index;
-			//printf("CMD_DAC_UPDATE %ld\r\n", dac_index);
-			dac_update_flag = 1;
-		}
-		break;
-	}
+//	switch (header[1])
+//	{
+//		case CMD_DAC_DONE:
+//		{
+//			printf("CMD_DAC_DONE \r\n");
+//		    start_new_ecg = 1;
+//			dac_update_flag = 2;
+//		}
+//		break;
+//		case CMD_DAC_UPDATE:
+//		{
+//        	memcpy(&dac_index, &header[8],  4);
+//        	update_dac_index = dac_index;
+//			//printf("CMD_DAC_UPDATE %ld\r\n", dac_index);
+//			dac_update_flag = 1;
+//		}
+//		break;
+//	}
 
     //rec_freq_flag = 0;
 }

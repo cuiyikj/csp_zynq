@@ -70,8 +70,8 @@ uint8_t start_new_ecg = 0;
 uint8_t dac_update_flag = 0;
 
 
-uint8_t current_measurement_flag = StopMeasurement;
-uint8_t voltage_measurement_flag = StopMeasurement;
+//uint8_t current_measurement_flag = StopMeasurement;
+//uint8_t voltage_measurement_flag = StopMeasurement;
 void tcp_fasttmr(void);
 void tcp_slowtmr(void);
 
@@ -201,7 +201,7 @@ void icd_tester_init(void)
 	fifo_init();
 }
 
-extern volatile uint8_t ADC_flag;
+extern volatile uint8_t adc_int_flag;
 extern volatile uint8_t ADC_index;
 
 uint32_t adc_loop_index = 0;
@@ -212,10 +212,10 @@ ECG_ADC read_data[64];
 
 void csp_tester_loop(void)
 {
-	int i;
+	//int i;
     uint8_t read_index = 0;
 
-	if (ADC_flag)
+	if (adc_int_flag)
 	{
         while (cb_adc_empty() == 0 && read_index < 8)
         {
@@ -228,8 +228,9 @@ void csp_tester_loop(void)
 		adc_loop_index++;
 		if (adc_loop_index%1000000 == 0)
 		{
-			//printf("get adc data%d \r\n", adc_loop_index/1000000);
+			printf("get adc data%d \r\n", adc_loop_index/1000000);
 		}
+		adc_int_flag = 0;
 	}
 
     if (tcp_check_update)
@@ -237,13 +238,14 @@ void csp_tester_loop(void)
         tcp_check_update = 0;
         update_tcp();
         //printf("tcp_check_update \r\n");
+        process_tcp_adc();
     }
 }
 
 void icd_send_data(uint8_t* buf, uint16_t len)
 {
 	//send_uart_1(buf, len);
-	tcp_transfer_icd_data(buf, len);
+	//tcp_transfer_icd_data(buf, len);
 }
 
 

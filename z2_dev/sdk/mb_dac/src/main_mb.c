@@ -93,7 +93,7 @@ uint32_t dac_loop_ms = 0;
 uint32_t led_loop = 0;
 volatile int TimerExpired;
 
-uint8_t  uart_data[CB_SIZE];
+uint8_t  mb_data[256];
 
 uint32_t timer_value = TIMER_VALUE_1US;
 
@@ -107,7 +107,7 @@ uint32_t pre_loop_debug = 0;
 uint8_t test_cmd[14]= {0xff, 0xfe, 0x0c, 0x00, 0x01, 0x01, 0x8, 0x60, 0x00, 0x00, 0x00, 0x40, 0x00, 0xb6};
 
 static uint8_t* arm_to_mb_base_mem = (uint8_t*)ARM_TO_MB_ADDRESS;
-static uint8_t* mb_to_arm_base_mem = (uint8_t*)MB_TO_ARM_ADDRESS;
+//static uint8_t* mb_to_arm_base_mem = (uint8_t*)MB_TO_ARM_ADDRESS;
 
 void process_command(void);
 void TimerCounterHandler(void *CallBackRef, u8 TmrCtrNumber);
@@ -132,14 +132,14 @@ extern int32_t channelData [ECG_CHANNEL_SIZE];
 uint32_t loop_index = 0;
 int main()
 {
-	uint8_t read_once;
+	//uint8_t read_once;
 
-	int ret = 0;
-    uint32_t pre_led_loop = 0;
+	//int ret = 0;
+    //uint32_t pre_led_loop = 0;
 
 
 	/* Initialization */
-	XStatus  status;
+	//XStatus  status;
 	// 1. Platform
   	init_platform();
 	print("Platform initialized \r\n");
@@ -160,9 +160,6 @@ int main()
 //		SPI_0_CS_HIGH();
 //		//xil_printf("ret %d \r\n", ret);
 //	}
-
-    ADS_reset();
-
 //    while(1)
 //    {
 //    	uint8_t data = ADS_RREG(0);
@@ -170,25 +167,42 @@ int main()
 //    	sleep(1);
 //    }
 
-    ADS_Init(reg_ini_normal);
 
+    ADS_reset();
+
+    ADS_Init(reg_ini_normal);
 	ADS_START();
 	ADS_RDATAC();
-	read_once = 1;
+
+	//read_once = 1;
 
 	//test_command();
 	while(1)
 	{
+		loop_index++;
 		//xil_printf("read adc\r\n");
 		if (ADC_flag != 0)
 		{
 	        INT_GPIO_LOW();
 	        //usleep(1);
 	        INT_GPIO_HIGH();
-
 //			ADS_RDATA();
 			ADC_flag = 0;
 			//xil_printf("read adc\r\n");
+
+
+		}
+		if (loop_index%1000 == 0)
+		{
+			//xil_printf("check CMD\r\n");
+			if (*arm_to_mb_base_mem != 0)
+			{
+				xil_printf("New CMD\r\n");
+				process_command();
+				*arm_to_mb_base_mem = 0;
+
+			}
+
 		}
 	}
 
@@ -201,21 +215,107 @@ int main()
 
 void process_command(void)
 {
-	uint16_t len = 0;
+	//uint16_t len = 0;
 
-	memcpy(uart_data, arm_to_mb_base_mem, 8);
-	len =  uart_data[2] + 6;
-	xil_printf("uart recv: %d\r\n", len);
+	memcpy(mb_data, arm_to_mb_base_mem, 8);
+//	len =  mb_data[2] + 6;
+//	xil_printf("uart recv: %d\r\n", len);
+//
+//	if (len >  8)
+//	{
+//		memcpy(mb_data, arm_to_mb_base_mem, len);
+//	}
+//	for (int i = 0; i< len; i++)
+//	{
+//		xil_printf("%x ", mb_data[i]);
+//		//RX_Buffer_Full_Callback(&mb_data[i]);
+//	}
+	*arm_to_mb_base_mem = 0;
 
-	if (len >  8)
+
+
+	if (mb_data[0] == 0x02 && mb_data[1] == 0x5a)
 	{
-		memcpy(uart_data, arm_to_mb_base_mem, len);
+		xil_printf("MB COMMAND %d \r\n", mb_data[2]);
+	    uint8_t  uart_cmd;
+
+		uint16_t read_crc16, crc16;
+		crc16 = crc16_compute(&mb_data[0], 6, NULL);
+
+		read_crc16 = mb_data[6] + mb_data[7]*256;
+		if (read_crc16 == crc16)
+		{
+			uart_cmd = mb_data[2];
+
+			switch(uart_cmd)
+			{
+			case CMD_MESSURE_LEAD:
+				ADS_reset();
+				ADS_Init(reg_ini_normal);
+				ADS_START();
+				ADS_RDATAC();
+
+				xil_printf("CMD_MESSURE_LEAD\r\n");
+			break;
+			case CMD_TEST_NOISE:
+				ADS_reset();
+				ADS_Init(reg_ini_noise);
+				ADS_START();
+				ADS_RDATAC();
+				xil_printf("CMD_TEST_NOISE\r\n");
+			break;
+			case CMD_CALIBRATE:
+				ADS_reset();
+				ADS_Init(reg_ini_calibrate);
+				ADS_START();
+				ADS_RDATAC();
+				xil_printf("CMD_TEST_NOISE\r\n");
+			break;
+			case CMD_SPS_1K:
+				ADS_reset();
+				reg_ini_normal[0] = 0x85;
+				ADS_Init(reg_ini_normal);
+				ADS_START();
+				ADS_RDATAC();
+			break;
+			case CMD_SPS_2K:
+				ADS_reset();
+				reg_ini_normal[0] = 0x84;
+				ADS_Init(reg_ini_normal);
+				ADS_START();
+				ADS_RDATAC();
+			break;
+			case CMD_SPS_4K:
+				ADS_reset();
+				reg_ini_normal[0] = 0x83;
+				ADS_Init(reg_ini_normal);
+				ADS_START();
+				ADS_RDATAC();
+			break;
+			case CMD_SPS_8K:
+				ADS_reset();
+				reg_ini_normal[0] = 0x82;
+				ADS_Init(reg_ini_normal);
+				ADS_START();
+				ADS_RDATAC();
+			break;
+			case CMD_SPS_START:
+			    ADS_Init(reg_ini_normal);
+
+				ADS_START();
+				ADS_RDATAC();
+				xil_printf("CMD_SPS_START\r\n");
+			break;
+
+			}
+
+		}
+		else
+		{
+			xil_printf("CRC error %x %x\r\n", read_crc16, crc16);
+		}
+
 	}
-	for (int i = 0; i< len; i++)
-	{
-		xil_printf("%x ", uart_data[i]);
-		//RX_Buffer_Full_Callback(&uart_data[i]);
-	}
-	xil_printf("\r\n uart recv done\r\n");
+
 }
 

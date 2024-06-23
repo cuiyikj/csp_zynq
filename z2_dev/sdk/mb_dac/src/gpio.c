@@ -28,7 +28,7 @@ uint8_t enable_adc_isr = 1;
 
 
 XGpio gpio_device_drdy;
-XGpio gpio_device_spi_cs;
+XGpio gpio_device_spi;
 XGpio gpio_device_int;
 
 
@@ -45,10 +45,12 @@ void GpioHandler(void *CallbackRef)
 	ADS_RDATA();
 
 	XGpio_InterruptClear(GpioPtr, 1);
-//	DEBUG_GPIO_HIGH();
-//	DEBUG_GPIO_LOW();
+
 
 	XGpio_InterruptEnable(GpioPtr, 1);
+	DEBUG_GPIO_HIGH();
+	DEBUG_GPIO_LOW();
+
 	//ADS_RDATA();
 	//ADC_flag = 1;
 	//XGpio_InterruptEnable(GpioPtr, 1);
@@ -66,7 +68,7 @@ int mb_gpio_init(void)
 	/* Initialization */
 	XStatus  status;
 
-	status = XGpio_Initialize(&gpio_device_spi_cs, XPAR_GPIO_2_DEVICE_ID);
+	status = XGpio_Initialize(&gpio_device_spi, XPAR_GPIO_2_DEVICE_ID);
 	if (status != XST_SUCCESS)
 	{
 		print("MB adc init error\n\r");
@@ -77,10 +79,10 @@ int mb_gpio_init(void)
 		print("MB adc init error\n\r");
 		return XST_FAILURE;
 	}
-	XGpio_SetDataDirection(&gpio_device_spi_cs, 1, 0);
-	XGpio_SetDataDirection(&gpio_device_spi_cs, 2, 0);
-	XGpio_DiscreteWrite(&gpio_device_spi_cs, 1, 1);
-	XGpio_DiscreteWrite(&gpio_device_spi_cs, 2, 1);
+	XGpio_SetDataDirection(&gpio_device_spi, 1, 0);
+	XGpio_SetDataDirection(&gpio_device_spi, 2, 0);
+	XGpio_DiscreteWrite(&gpio_device_spi, 1, 1);
+	XGpio_DiscreteWrite(&gpio_device_spi, 2, 1);
 
 	//intc DRDY
 	status = XGpio_Initialize(&gpio_device_drdy, XPAR_GPIO_0_DEVICE_ID);

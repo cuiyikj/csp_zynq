@@ -26,7 +26,7 @@ XGpio gpio_dev;
 XGpio main_gpio_int;
 uint8_t int_update = 0;
 
-volatile uint8_t ADC_flag = 0;
+volatile uint8_t adc_int_flag = 0;
 volatile uint8_t ADC_index = 0;
 
 uint8_t read_adc_buf[36*8];
@@ -46,7 +46,7 @@ void main_gpio_int_handler(void *CallbackRef)
 
     cb_adc_put(adc_p);
 
-	ADC_flag = 1;
+    adc_int_flag = 1;
 	ADC_index++;
 
 

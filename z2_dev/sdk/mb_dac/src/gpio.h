@@ -3,17 +3,17 @@
 
 #include <stdio.h>
 #include "xgpio.h"
-extern XGpio gpio_device_spi_cs;
+extern XGpio gpio_device_spi;
 extern XGpio gpio_device_drdy;
 extern XGpio gpio_device_int;
 
 
 
-#define SPI_0_CS_LOW()				set_gpio(&gpio_device_spi_cs, 1, 0, 0)
-#define SPI_0_CS_HIGH()				set_gpio(&gpio_device_spi_cs, 1, 0, 1)
+#define SPI_0_CS_LOW()				set_gpio(&gpio_device_spi, 1, 0, 0)
+#define SPI_0_CS_HIGH()				set_gpio(&gpio_device_spi, 1, 0, 1)
 
-#define RESET_ADS1298_LOW()			set_gpio(&gpio_device_spi_cs, 2, 0, 0)
-#define RESET_ADS1298_HIGH()		set_gpio(&gpio_device_spi_cs, 2, 0, 1)
+#define RESET_ADS1298_LOW()			set_gpio(&gpio_device_spi, 2, 0, 0)
+#define RESET_ADS1298_HIGH()		set_gpio(&gpio_device_spi, 2, 0, 1)
 
 #define READ_SPI_DRDY()	        	read_gpio(&gpio_device_drdy, 1, 0)
 #define DEBUG_GPIO_HIGH()			set_gpio(&gpio_device_drdy, 2, 0, 1)
