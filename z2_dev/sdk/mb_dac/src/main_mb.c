@@ -183,9 +183,9 @@ int main()
 		//xil_printf("read adc\r\n");
 		if (ADC_flag != 0)
 		{
-	        INT_GPIO_LOW();
+	        //INT_GPIO_LOW();
 	        //usleep(1);
-	        INT_GPIO_HIGH();
+	        //INT_GPIO_HIGH();
 //			ADS_RDATA();
 			ADC_flag = 0;
 			//xil_printf("read adc\r\n");

@@ -640,6 +640,8 @@ void ADS_RDATA()
     	//xil_printf("temp_adc_p[0] %x %x\r\n", temp_adc_p[1], temp_adc_p[2]);
         adc_seq = 0;
         ADC_flag = 1;
+        INT_GPIO_LOW();
+        INT_GPIO_HIGH();
     }
     //xil_printf("adc_seq %d \r\n", adc_seq);
 

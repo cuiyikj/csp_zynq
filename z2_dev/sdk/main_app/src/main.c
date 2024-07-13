@@ -161,16 +161,11 @@ int main()
 
 
 #if ENABLE_NET
-#if LWIP_DHCP==1
-    ipaddr.addr = 0;
-    gw.addr = 0;
-    netmask.addr = 0;
-#else
+
     /* initialize IP addresses to be used */
     IP4_ADDR(&ipaddr,  17, 17,   17, 17);
     IP4_ADDR(&netmask, 255, 255, 255,  0);
     IP4_ADDR(&gw,      17, 17,   17,  1);
-#endif
 
     print_app_header();
 
@@ -189,42 +184,16 @@ int main()
     /* now enable interrupts */
     platform_enable_interrupts();
 
-#if ENABLE_NET
+
     /* specify that the network if is up */
     netif_set_up(echo_netif);
 
 
-#if (LWIP_DHCP==1)
-    /* Create a new DHCP client for this interface.
-     * Note: you must call dhcp_fine_tmr() and dhcp_coarse_tmr() at
-     * the predefined regular intervals after starting the client.
-     */
-    dhcp_start(echo_netif);
-    dhcp_timoutcntr = 24;
 
-    while(((echo_netif->ip_addr.addr) == 0) && (dhcp_timoutcntr > 0))
-        xemacif_input(echo_netif);
-
-    if (dhcp_timoutcntr <= 0) 
-    {
-        if ((echo_netif->ip_addr.addr) == 0) 
-        {
-            xil_printf("DHCP Timeout\r\n");
-            xil_printf("Configuring default IP of 192.168.1.10\r\n");
-            IP4_ADDR(&(echo_netif->ip_addr),  192, 168,   1, 10);
-            IP4_ADDR(&(echo_netif->netmask), 255, 255, 255,  0);
-            IP4_ADDR(&(echo_netif->gw),      192, 168,   1,  1);
-        }
-    }
-
-    ipaddr.addr = echo_netif->ip_addr.addr;
-    gw.addr = echo_netif->gw.addr;
-    netmask.addr = echo_netif->netmask.addr;
-#endif
     print_ip_settings(&ipaddr, &netmask, &gw);
     /* start the application (web server, rxtest, txtest, etc..) */
     start_application();
-#endif
+
 
 
     icd_tester_init();
