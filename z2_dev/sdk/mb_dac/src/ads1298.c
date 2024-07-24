@@ -56,7 +56,7 @@ uint8_t reg_ini_normal[25]=
 
 uint8_t reg_ini_noise[25]=
 {
-    0x85, //0
+    0x82, //0
     0x35,
     0xc0,
     0x00,
@@ -85,7 +85,7 @@ uint8_t reg_ini_noise[25]=
 
 uint8_t reg_ini_calibrate[25]=
 {
-    0x85, //0
+    0x82, //0
     0x35,
     0xc0,
     0x00,
